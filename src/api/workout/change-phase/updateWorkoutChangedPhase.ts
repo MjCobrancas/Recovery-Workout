@@ -15,7 +15,7 @@ export async function updateWorkoutChangedPhase<T>(object: T) {
       },
       body: JSON.stringify(object)
     })
-      .then(async (value: any) => {
+      .then(async (value) => {
         let data = await value.json()
   
         if (value.status == 400) {

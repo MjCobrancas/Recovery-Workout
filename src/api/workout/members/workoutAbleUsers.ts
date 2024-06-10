@@ -14,7 +14,7 @@ export async function workoutAbleUsers() {
         Authorization: "Bearer " + userParse.accessToken,
         }
     })
-        .then(async (value: any) => {
+        .then(async (value) => {
         let data = await value.json()
 
         if (value.status == 400) {

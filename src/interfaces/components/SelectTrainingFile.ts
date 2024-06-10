@@ -1,11 +1,12 @@
 import { z } from "zod"
+import { IAvaliationQuestions, ICreditorQuestionsHeader } from "../workout/instructions/IAvaliationForm"
 
 interface ISelectTrainingFile {
     typeFile: string
     fileUrl: string
     YoutubeExternalVideo: string | null
-    CreditorQuestions: any[]
-    CreditorInfo: any[]
+    CreditorQuestions: IAvaliationQuestions[]
+    CreditorInfo: ICreditorQuestionsHeader[]
 }
 
 export const SelectTrainingFileSchema = z.object({

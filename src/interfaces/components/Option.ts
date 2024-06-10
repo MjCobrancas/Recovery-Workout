@@ -3,6 +3,7 @@ interface IOption {
     firstValue?: string
     value: string | number
     selectedValue?: string | number
+    styles?: string
 }
 
 export type { IOption }

@@ -2,6 +2,7 @@
 
 import { ITokenUserInitialValues } from "@/interfaces/Generics"
 import { GetUserToken } from "@/utils/GetUserToken"
+import { revalidateTag } from "next/cache"
 
 export async function updateGlobalFiles<T>(object: T) {
     const userParse: ITokenUserInitialValues = GetUserToken()
@@ -16,21 +17,23 @@ export async function updateGlobalFiles<T>(object: T) {
         },
         body: JSON.stringify(object)
     })
-    .then(async (value: any) => {
-        const data = await value.json()
+        .then(async (value: any) => {
+            const data = await value.json()
 
-        return {
-            data: data,
-            status: true,
-        }
-        
-    })
-    .catch((error) => {
-        return {
-            data: null,
-            status: false
-        }
-    })
-    
+            return {
+                data: data,
+                status: true,
+            }
+
+        })
+        .catch((error) => {
+            return {
+                data: null,
+                status: false
+            }
+        })
+
+    revalidateTag("get-global-files")
+
     return resp
 }

@@ -3,8 +3,8 @@ interface IResult {
 }
 
 interface IResultDefaultResponse<T> {
-    data?: T
-    status?: boolean
+    data: T
+    status: boolean
 }
 
 interface ITokenUserInitialValues {
@@ -37,6 +37,5 @@ interface CepValues {
 interface RespCep {
     value?: CepValues
 }
-
 
 export type { IResult, IResultDefaultResponse, ITokenUserValues, ITokenUserInitialValues, CepValues, RespCep }

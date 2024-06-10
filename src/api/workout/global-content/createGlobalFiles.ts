@@ -10,27 +10,25 @@ export async function createGlobalFiles<T>(object: T) {
         `${process.env.BACKEND_DOMAIN}/workout-create-global-file`, {
         method: "POST",
         headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + userParse.accessToken,
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + userParse.accessToken,
         },
         body: JSON.stringify(object)
     })
-        .then(async (value: any) => {
-        const data = await value.json()
-        console.log(data)
+        .then(async (value) => {
+            const data = await value.json()
 
-        return {
-            data: data,
-            status: true,
-        }
+            return {
+                data: data,
+                status: true,
+            }
         })
         .catch((error) => {
-        console.log(error)
-        return {
-            data: null,
-            status: false
-        }
+            return {
+                data: null,
+                status: false
+            }
         })
 
     return resp
@@ -45,24 +43,22 @@ export async function uploadGlobalFile(idForm: number, file: any) {
     const uploadFilename = await fetch(
         `${process.env.BACKEND_DOMAIN}/workout-upload-global-file/${idForm}`,
         {
-        method: "POST",
-        headers: {
-            Authorization: "Bearer " + userParse.accessToken,
-        },
-        body: file,
+            method: "POST",
+            headers: {
+                Authorization: "Bearer " + userParse.accessToken,
+            },
+            body: file,
         }
     )
         .then(async (resp) => {
-        if (resp.status == 400) {
-            console.log('a')
-            return false
-        }
+            if (resp.status == 400) {
+                return false
+            }
 
-        return true
+            return true
         })
         .catch(() => {
-        console.log('b')
-        return false
+            return false
         })
 
     return uploadFilename
@@ -71,31 +67,29 @@ export async function uploadGlobalFile(idForm: number, file: any) {
 export async function uploadInitialGlobalFile(idForm: number, file: any) {
     const userParse: ITokenUserInitialValues = GetUserToken()
 
-  console.log("IdForm:", idForm)
-  console.log(file)
+    console.log("IdForm:", idForm)
+    console.log(file)
 
-  const uploadFilename = await fetch(
-    `${process.env.BACKEND_DOMAIN}/workout-upload-global-file-initial/${idForm}`,
-    {
-      method: "POST",
-      headers: {
-        Authorization: "Bearer " + userParse.accessToken,
-      },
-      body: file,
-    }
-  )
-    .then(async (resp) => {
-      if (resp.status == 400) {
-        console.log('a')
-        return false
-      }
+    const uploadFilename = await fetch(
+        `${process.env.BACKEND_DOMAIN}/workout-upload-global-file-initial/${idForm}`,
+        {
+            method: "POST",
+            headers: {
+                Authorization: "Bearer " + userParse.accessToken,
+            },
+            body: file,
+        }
+    )
+        .then(async (resp) => {
+            if (resp.status == 400) {
+                return false
+            }
 
-      return true
-    })
-    .catch(() => {
-      console.log('b')
-      return false
-    })
+            return true
+        })
+        .catch(() => {
+            return false
+        })
 
-  return uploadFilename
+    return uploadFilename
 }

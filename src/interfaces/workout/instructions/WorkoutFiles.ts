@@ -28,6 +28,19 @@ interface IOperatorFiles {
     FileExtension: string | null | undefined
 }
 
+interface IWorkoutFilesResponse {
+    creditorFiles: ICreditorFiles[]
+    operatorFiles: IOperatorFiles[]
+    globalFiles: IGlobalFiles[]
+}
+
+interface IWorkoutInitialGlobalFilesResponse {
+    Id_Global_File: number
+    Title: string
+    YoutubeExternalVideo: string | null
+    FileExtension: string | null | undefined
+}
+
 interface IWorkoutFiles {
     initialGlobalFiles: IInitialGlobalFiles[]
     globalFiles: IGlobalFiles[]
@@ -37,4 +50,4 @@ interface IWorkoutFiles {
     getFileCallBack: Function
 }
 
-export type { IInitialGlobalFiles, IGlobalFiles, ICreditorFiles, IOperatorFiles, IWorkoutFiles}
+export type { IInitialGlobalFiles, IGlobalFiles, ICreditorFiles, IOperatorFiles, IWorkoutFiles, IWorkoutFilesResponse, IWorkoutInitialGlobalFilesResponse}

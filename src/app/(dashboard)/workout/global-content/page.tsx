@@ -1,14 +1,14 @@
 import { getAllWorkoutPhases } from "@/api/workout/change-phase/getAllWorkoutPhases"
-import ContainerGlobalContent from "@/components/workout/global-content/ContainerGlobalContent"
+import { ContainerGlobalContent } from "@/components/workout/global-content/ContainerGlobalContent"
 
 export default async function WorkoutGlobalContent() {
 
-    const wGetAllPhases = await getAllWorkoutPhases()
+    const workoutGetAllPhases = await getAllWorkoutPhases()
 
     return (
         <>
             <ContainerGlobalContent
-                WorkoutAllPhases={wGetAllPhases}
+                WorkoutAllPhases={workoutGetAllPhases}
             />
         </>
     )

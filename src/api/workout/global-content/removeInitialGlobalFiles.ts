@@ -10,26 +10,26 @@ export async function removeInitialGlobalFiles(id: number) {
         `${process.env.BACKEND_DOMAIN}/workout-remove-initial-global-file/${id}`, {
         method: "GET",
         headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + userParse.accessToken,
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + userParse.accessToken,
         }
-      })
-        .then(async (value: any) => {
-          const data = await value.json()
-    
-          return {
-            data: data,
-            status: true,
-          }
-          
+    })
+        .then(async (value) => {
+            const data = await value.json()
+
+            return {
+                data: data,
+                status: true,
+            }
+
         })
         .catch((error) => {
-          return {
-            data: null,
-            status: false
-          }
+            return {
+                data: null,
+                status: false
+            }
         })
-    
-      return resp
+
+    return resp
 }

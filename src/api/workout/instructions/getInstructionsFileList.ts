@@ -1,6 +1,7 @@
 'use server'
 
 import { ITokenUserInitialValues } from "@/interfaces/Generics"
+import { IWorkoutFilesResponse } from "@/interfaces/workout/instructions/WorkoutFiles"
 import { GetUserToken } from "@/utils/GetUserToken"
 
 export async function getInstructionsFileList(idUser: number) {
@@ -18,11 +19,11 @@ export async function getInstructionsFileList(idUser: number) {
         id_user: idUser
       })
     })
-      .then(async (value: any) => {
+      .then(async (value) => {
         const data = await value.json()
   
         return {
-          data: data,
+          data: data as IWorkoutFilesResponse[],
           status: true,
         }
         
