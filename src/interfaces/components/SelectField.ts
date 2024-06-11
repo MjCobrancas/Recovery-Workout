@@ -1,4 +1,4 @@
-import { ChangeEventHandler } from "react"
+import { ChangeEventHandler, LegacyRef } from "react"
 import { FieldValue, UseFormRegister } from "react-hook-form"
 
 interface ISelectField {
@@ -13,7 +13,7 @@ interface ISelectField {
     onForm?: boolean
     register?: UseFormRegister<FieldValue<any>>
     value?: string | number
-
+    refValue?:  LegacyRef<HTMLSelectElement> | null
 }
 
 export type { ISelectField }

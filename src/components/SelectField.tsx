@@ -1,7 +1,7 @@
 import { ISelectField } from "@/interfaces/components/SelectField";
 import { twMerge } from "tailwind-merge";
 
-export function SelectField({ id, name, required = false, disabled = false, multiple = false, styles, OnChange, children, onForm, register, value }: ISelectField) {
+export function SelectField({ id, name, required = false, disabled = false, multiple = false, styles, OnChange, children, onForm, register, value, refValue = null }: ISelectField) {
 
     return (
         <>
@@ -28,6 +28,7 @@ export function SelectField({ id, name, required = false, disabled = false, mult
                 </select>
             ) : (
                 <select
+                    ref={refValue}
                     multiple={multiple}
                     name={name}
                     id={id}

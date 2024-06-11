@@ -1,10 +1,15 @@
+'use server'
+
 import { ITokenUserInitialValues } from "@/interfaces/Generics"
+import { ICreditorFilesList } from "@/interfaces/workout/creditor-content/IEditCreditorContent"
 import { GetUserToken } from "@/utils/GetUserToken"
 
-export async function getAllCreditors() {
+export async function getCreditorFilesList(idCreditor: number) {
+
     const userParse: ITokenUserInitialValues = GetUserToken()
 
-    const resp = await fetch(`${process.env.BACKEND_DOMAIN}/get-all-creditors`, {
+    const resp = await fetch(
+        `${process.env.BACKEND_DOMAIN}/workout-get-creditor-files/${idCreditor}`, {
         method: "GET",
         headers: {
             Accept: "application/json",
@@ -12,20 +17,23 @@ export async function getAllCreditors() {
             Authorization: "Bearer " + userParse.accessToken,
         },
         next: {
-            tags: ["allCreditors"]
+            tags: ["get-creditors-files-content"]
         }
     })
         .then(async (value) => {
             const data = await value.json()
 
-            if (value.status == 400) {
-                return false
+            return {
+                data: data as ICreditorFilesList[],
+                status: true,
             }
 
-            return data
         })
         .catch((error) => {
-            return false
+            return {
+                data: null,
+                status: false
+            }
         })
 
     return resp
