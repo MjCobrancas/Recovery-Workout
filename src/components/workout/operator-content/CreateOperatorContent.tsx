@@ -1,16 +1,17 @@
-import { createGlobalFiles, uploadGlobalFile, uploadInitialGlobalFile } from "@/api/workout/global-content/createGlobalFiles";
+import { createCreditorFile, uploadCreditorFile } from "@/api/workout/creditor-content/createCreditorFile";
+import { createOperatorFile, uploadOperatorFile } from "@/api/workout/operator-content/createOperatorFile";
 import { Button } from "@/components/Button";
 import { FieldForm } from "@/components/FieldForm";
 import { Option } from "@/components/Option";
 import { SelectField } from "@/components/SelectField";
-import { ICreateFileGlobalContentProps, ICreateFileGlobalForm, ICreateFileGlobalSchema } from "@/interfaces/workout/global-content/ICreateFileGlobalContent";
+import { ICreateFileOperatorForm, ICreateFileOperatorSchema, ICreateOperatorContentProps } from "@/interfaces/workout/operator-content/ICreateOperatorContent";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useRef, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { twMerge } from "tailwind-merge";
 
-export function CreateGlobalContent({ WorkoutAllPhases }: ICreateFileGlobalContentProps) {
+export function CreateOperatorContent({ operators, workoutGetAllPhases }: ICreateOperatorContentProps) {
 
     const [isFile, setIsFile] = useState(1)
     const [fileLength, setFileLength] = useState(0)
@@ -18,14 +19,15 @@ export function CreateGlobalContent({ WorkoutAllPhases }: ICreateFileGlobalConte
     const [disableButton, setDisableButton] = useState(true)
     const [isSentFile, setIsSentFile] = useState(false)
 
-    const { register, handleSubmit, watch, formState: { errors }, resetField, getValues, setValue, setError, reset } = useForm<ICreateFileGlobalForm>({
+    const { register, handleSubmit, watch, formState: { errors }, resetField, getValues, setValue, setError, reset } = useForm<ICreateFileOperatorForm>({
         defaultValues: {
             title: "",
             phases: "0",
             inputUrl: "",
-            file: null
+            file: null,
+            idOperator: "0"
         },
-        resolver: zodResolver(ICreateFileGlobalSchema)
+        resolver: zodResolver(ICreateFileOperatorSchema)
     })
 
     useEffect(() => {
@@ -73,7 +75,7 @@ export function CreateGlobalContent({ WorkoutAllPhases }: ICreateFileGlobalConte
         setDisableButton(true)
     }
 
-    async function handleCreateGlobalFile(data: FieldValues) {
+    async function handleCreateCreditorFile(data: FieldValues) {
         const file = getValues("file")
         const inputUrl = getValues("inputUrl")
 
@@ -100,15 +102,16 @@ export function CreateGlobalContent({ WorkoutAllPhases }: ICreateFileGlobalConte
         const workoutFileConfig = {
             title: String(data.title),
             id_phase: Number(data.phases),
-            youtube_link: String(inputUrl).trim() == '' ? '' : String(inputUrl).trim()
+            youtube_link: String(inputUrl).trim() == '' ? '' : String(inputUrl).trim(),
+            id_operator: Number(data.idOperator)
         }
 
-        const globalFile = await createGlobalFiles<typeof workoutFileConfig>(workoutFileConfig)
+        const operatorFile = await createOperatorFile<typeof workoutFileConfig>(workoutFileConfig)
 
-        if (!globalFile.status) {
+        if (!operatorFile.status) {
             setIsSentFile(false)
 
-            toast.error("Houve um erro na criação de um novo arquivo global, revise os valores e tente novamente!", {
+            toast.error("Houve um erro na criação de um novo arquivo do operador, revise os valores e tente novamente!", {
                 duration: 5000
             })
 
@@ -118,7 +121,7 @@ export function CreateGlobalContent({ WorkoutAllPhases }: ICreateFileGlobalConte
         if (String(inputUrl).trim().length > 0) {
             setIsSentFile(false)
 
-            toast.success("Arquivo global criado com sucesso!", {
+            toast.success("Arquivo do operador criado com sucesso!", {
                 duration: 5000
             })
 
@@ -130,32 +133,7 @@ export function CreateGlobalContent({ WorkoutAllPhases }: ICreateFileGlobalConte
         const formData = new FormData()
         formData.append("gravacao", file!)
 
-        if (Number(data.phases) == 0) {
-            const fileStatus = await uploadInitialGlobalFile(
-                globalFile!.data!.id,
-                formData
-            )
-
-            setIsSentFile(false)
-
-            if (!fileStatus) {
-                toast.error("Houve um erro ao tentar criar o arquivo no sistema, tente novamente!", {
-                    duration: 5000
-                })
-
-                return
-            }
-
-            toast.success("Arquivo global criado com sucesso!", {
-                duration: 5000
-            })
-
-            reset()
-
-            return
-        }
-
-        const fileStatus = await uploadGlobalFile(globalFile!.data!.id,formData)
+        const fileStatus = await uploadOperatorFile(operatorFile!.data!.id, formData)
 
         setIsSentFile(false)
 
@@ -167,7 +145,7 @@ export function CreateGlobalContent({ WorkoutAllPhases }: ICreateFileGlobalConte
             return
         }
 
-        toast.success("Arquivo global criado com sucesso!", {
+        toast.success("Arquivo do operador criado com sucesso!", {
             duration: 5000
         })
 
@@ -175,7 +153,7 @@ export function CreateGlobalContent({ WorkoutAllPhases }: ICreateFileGlobalConte
     }
 
     return (
-        <form onSubmit={handleSubmit(handleCreateGlobalFile)}>
+        <form onSubmit={handleSubmit(handleCreateCreditorFile)}>
             <div className="flex justify-center items-center gap-2">
                 <FieldForm label="date" name="Título:" obrigatory={true} error={errors.title && "Inválido"}>
                     <input
@@ -198,6 +176,33 @@ export function CreateGlobalContent({ WorkoutAllPhases }: ICreateFileGlobalConte
                 </FieldForm>
 
                 <FieldForm
+                    label="operator"
+                    name="Operador:"
+                    error={errors.idOperator && "Inválido!"}
+                >
+                    <SelectField
+                        name="idOperator"
+                        id="operator"
+                        styles={`h-11 ` + `${errors.idOperator
+                            ? "border-[--label-color-error] dark:border-[--label-color-error]"
+                            : ""
+                        }`} required
+                        onForm={true}
+                        register={register}
+                        value={watch("idOperator")}
+                    >
+                        <Option value={"0"} firstValue={"Selecione"} />
+
+                        {operators.map((operator, index) => {
+                            return (
+                                <Option key={index} value={operator.Id_User} firstValue={`${operator.Name} ${operator.Last_Name}`} />
+                            )
+                        })}
+                        
+                    </SelectField>
+                </FieldForm>
+
+                <FieldForm
                     label="phases"
                     name="Fase:"
                     error={errors.phases && "Inválido"}
@@ -214,9 +219,14 @@ export function CreateGlobalContent({ WorkoutAllPhases }: ICreateFileGlobalConte
                         register={register}
                         value={watch("phases")}
                     >
-                        <Option value={0} firstValue={"Treinamento Inicial"} />
+                        <Option value={0} firstValue={"Selecione"} />
 
-                        {WorkoutAllPhases.map((item, index) => {
+                        {workoutGetAllPhases.map((item, index) => {
+
+                            if (index == 5) {
+                                return
+                            }
+
                             return (
                                 <Option key={index} value={item.Id_Phase} firstValue={item.Phase} />
                             )

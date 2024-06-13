@@ -110,7 +110,7 @@ export function CreateCreditorContent({ Creditors, WorkoutAllPhases }: ICreateCr
         if (!creditorFile.status) {
             setIsSentFile(false)
 
-            toast.error("Houve um erro na criação de um novo arquivo global, revise os valores e tente novamente!", {
+            toast.error("Houve um erro na criação de um novo arquivo do credor, revise os valores e tente novamente!", {
                 duration: 5000
             })
 
@@ -120,7 +120,7 @@ export function CreateCreditorContent({ Creditors, WorkoutAllPhases }: ICreateCr
         if (String(inputUrl).trim().length > 0) {
             setIsSentFile(false)
 
-            toast.success("Arquivo global criado com sucesso!", {
+            toast.success("Arquivo do credor criado com sucesso!", {
                 duration: 5000
             })
 
@@ -131,31 +131,6 @@ export function CreateCreditorContent({ Creditors, WorkoutAllPhases }: ICreateCr
 
         const formData = new FormData()
         formData.append("gravacao", file!)
-
-        if (Number(data.phases) == 0) {
-            const fileStatus = await uploadCreditorFile(
-                creditorFile!.data!.id,
-                formData
-            )
-
-            setIsSentFile(false)
-
-            if (!fileStatus) {
-                toast.error("Houve um erro ao tentar criar o arquivo no sistema, tente novamente!", {
-                    duration: 5000
-                })
-
-                return
-            }
-
-            toast.success("Arquivo global criado com sucesso!", {
-                duration: 5000
-            })
-
-            reset()
-
-            return
-        }
 
         const fileStatus = await uploadCreditorFile(creditorFile!.data!.id, formData)
 
@@ -169,7 +144,9 @@ export function CreateCreditorContent({ Creditors, WorkoutAllPhases }: ICreateCr
             return
         }
 
-        toast.success("Arquivo global criado com sucesso!")
+        toast.success("Arquivo do credor criado com sucesso!", {
+            duration: 5000
+        })
 
         reset()
     }
