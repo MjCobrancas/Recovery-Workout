@@ -1,15 +1,16 @@
 'use server'
 
 import { ITokenUserInitialValues } from "@/interfaces/Generics"
+import { ICreditorAvaliationQuestionsResponse } from "@/interfaces/workout/prepare-avaliation/IPrepareAvaliationInitialForm"
 import { GetUserToken } from "@/utils/GetUserToken"
-import { revalidateTag } from "next/cache"
 
-export async function updateGlobalFiles<T>(object: T) {
+export async function getCreditorAvaliationQuestions(object: { id_creditor: number }) {
+
     const userParse: ITokenUserInitialValues = GetUserToken()
 
     const resp = await fetch(
-        `${process.env.BACKEND_DOMAIN}/workout-update-global-files`, {
-        method: "PUT",
+        `${process.env.BACKEND_DOMAIN}/workout-get-avaliation-questions`, {
+        method: "POST",
         headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
@@ -17,10 +18,10 @@ export async function updateGlobalFiles<T>(object: T) {
         },
         body: JSON.stringify(object)
     })
-        .then(async (value: any) => {
+        .then(async (value) => {
             const data = await value.json()
 
-            if (data.data == null) {
+            if (data.errors.length > 0) {
                 return {
                     data: null,
                     status: false
@@ -28,19 +29,17 @@ export async function updateGlobalFiles<T>(object: T) {
             }
 
             return {
-                data: data,
-                status: true,
+                data: data.data as ICreditorAvaliationQuestionsResponse,
+                status: true
             }
-
         })
         .catch((error) => {
+
             return {
                 data: null,
-                status: false
+                status: false,
             }
         })
-
-    revalidateTag("get-global-files")
 
     return resp
 }

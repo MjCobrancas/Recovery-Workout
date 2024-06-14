@@ -2,13 +2,13 @@
 
 import { ITokenUserInitialValues } from "@/interfaces/Generics"
 import { GetUserToken } from "@/utils/GetUserToken"
-import { revalidateTag } from "next/cache"
 
-export async function updateGlobalFiles<T>(object: T) {
+export async function updateAvaliationQuestions<T>(object: T) {
+
     const userParse: ITokenUserInitialValues = GetUserToken()
 
     const resp = await fetch(
-        `${process.env.BACKEND_DOMAIN}/workout-update-global-files`, {
+        `${process.env.BACKEND_DOMAIN}/workout-update-avaliation-questions`, {
         method: "PUT",
         headers: {
             Accept: "application/json",
@@ -17,10 +17,10 @@ export async function updateGlobalFiles<T>(object: T) {
         },
         body: JSON.stringify(object)
     })
-        .then(async (value: any) => {
+        .then(async (value) => {
             const data = await value.json()
 
-            if (data.data == null) {
+            if (data.status != 201) {
                 return {
                     data: null,
                     status: false
@@ -28,19 +28,17 @@ export async function updateGlobalFiles<T>(object: T) {
             }
 
             return {
-                data: data,
-                status: true,
+                data: data.data,
+                status: true
             }
-
         })
         .catch((error) => {
+
             return {
                 data: null,
                 status: false
             }
         })
-
-    revalidateTag("get-global-files")
 
     return resp
 }
