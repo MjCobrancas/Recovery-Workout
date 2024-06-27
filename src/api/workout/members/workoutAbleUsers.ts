@@ -18,13 +18,22 @@ export async function workoutAbleUsers() {
         let data = await value.json()
 
         if (value.status == 400) {
-            return false
+            return {
+                data: null,
+                status: false
+            }
         }
 
-        return data
+        return {
+            data: data,
+            status: true
+        }
         })
         .catch((error) => {
-        return false
+        return {
+            data: null,
+            status: false
+        }
         })
 
     return resp

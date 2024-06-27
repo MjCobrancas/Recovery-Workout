@@ -12,4 +12,30 @@ interface IWorkoutMembers {
     Created_At_Formatted: string
 }
 
-export type { IWorkoutMembers }
+interface IWorkoutAbleUser {
+    Responsable: string
+    Responsable_Last_Name: string
+    Negotiator: string
+    Negotiator_Last_Name: string
+    End_At: string
+    End_At_Formatted: string
+}
+
+interface IWorkoutQuitterUser {
+    Responsable: string
+    Responsable_Last_Name: string
+    Negotiator: string
+    Negotiator_Last_Name: string
+    Dimissal_At: string
+    Dimissal_At_Formatted: string
+}
+
+interface IWorkoutDialogAble {
+    ableUsers: IWorkoutAbleUser[] | null
+}
+
+interface IWorkoutDialogQuitter {
+    quitterUsers: IWorkoutQuitterUser[] | null
+}
+
+export type { IWorkoutMembers, IWorkoutAbleUser, IWorkoutDialogAble, IWorkoutQuitterUser, IWorkoutDialogQuitter }
