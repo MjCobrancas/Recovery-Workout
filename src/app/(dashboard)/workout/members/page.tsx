@@ -2,9 +2,13 @@ import { workoutAbleUsers } from "@/api/workout/members/workoutAbleUsers";
 import { workoutList } from "@/api/workout/members/workoutList";
 import { workoutQuitterUsers } from "@/api/workout/members/workoutQuitterUsers";
 import { Ancora } from "@/components/Ancora";
+import { Button } from "@/components/Button";
 import { PaperBlock } from "@/components/PaperBlock";
 import { TextPrincipal } from "@/components/TextPrincipal";
-import { IWorkoutMembers } from "@/interfaces/workout/members/WorkoutMembers";
+import { WorkoutDialogAble } from "@/components/workout/members/WorkoutDialogAble";
+import { WorkoutDialogQuitter } from "@/components/workout/members/WorkoutDialogQuitter";
+import { IResultDefaultResponse } from "@/interfaces/Generics";
+import { IWorkoutAbleUser, IWorkoutMembers, IWorkoutQuitterUser } from "@/interfaces/workout/members/WorkoutMembers";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
@@ -13,8 +17,8 @@ export default async function workoutMembers() {
 
     const data: IWorkoutMembers[] | null = await workoutList()
 
-    const quitterUsers: number = await workoutQuitterUsers()
-    const ableUsers: number = await workoutAbleUsers()
+    const quitterUsers: IResultDefaultResponse<IWorkoutQuitterUser[] | null> = await workoutQuitterUsers()
+    const ableUsers: IResultDefaultResponse<IWorkoutAbleUser[] | null> = await workoutAbleUsers()
 
     return (
         <PaperBlock styles={``}>
@@ -56,21 +60,17 @@ export default async function workoutMembers() {
                     </Link>
                 </div>
 
-                <div className={`flex items-end gap-2`}>
+                <div className={`flex items-end`}>
                     <div className={`flex items-end`}>
-                        <div
-                            className={`border border-green-500 rounded-md bg-transparent duration-200 px-2 py-2 text-green-500 hover:bg-green-500 hover:text-white dark:bg-transparent dark:hover:bg-green-500 dark:hover:text-white font-bold`}
-                        >
-                            Aptos do mês: {String(ableUsers).padStart(2, "0")}
-                        </div>
+                        <WorkoutDialogAble
+                            ableUsers={ableUsers.data}
+                        />
                     </div>
 
                     <div className={`flex items-end mr-2`}>
-                        <div
-                            className={`border border-red-500 rounded-md bg-transparent duration-200 px-2 py-2 text-red-500 hover:bg-red-500 hover:text-white dark:bg-transparent dark:hover:bg-red-500 dark:hover:text-white font-bold`}
-                        >
-                            Desistentes do mês: {String(quitterUsers).padStart(2, "0")}
-                        </div>
+                        <WorkoutDialogQuitter 
+                            quitterUsers={quitterUsers.data}
+                        />
                     </div>
                 </div>
             </div>
