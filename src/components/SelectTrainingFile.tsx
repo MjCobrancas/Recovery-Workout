@@ -46,10 +46,12 @@ export function SelectTrainingFile({ typeFile, fileUrl, YoutubeExternalVideo, Cr
             }
 
             {typeFile == "audio" && fileUrl &&
-                <audio controls className={`w-full mb-2`} id="audio">
-                    <source src={fileUrl} type="audio/wav" />
-                    Your browser does not support the audio element.
-                </audio>
+                <div className="w-2/4 h-full flex flex-col items-center justify-center font-medium">
+                    <audio controls className={`w-full mb-2`} id="audio">
+                        <source src={fileUrl} type="audio/wav" />
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
             }
 
             {typeFile == "loading" &&

@@ -53,7 +53,7 @@ export default function ContainerInstructions({ workoutFiles, initialGlobalFiles
                     setTypeFile("file")
 
                     setFileUrl(fileBase64)
-                    if (FileExtension == ".mp3" || FileExtension == ".wav") {
+                    if (result.value.object.type == "audio/wav") {
                         setTypeFile("audio")
                     }
                 })
