@@ -11,6 +11,47 @@ export default async function SetUserCookies(response: IResult, status: boolean)
             maxAge: 60 * 60 * 24 * 7, // one week
         })
 
+        const object = {
+            idUser: response.idUser,
+            accessToken: response.accessToken,
+            refreshToken: response.refreshToken
+        }
+
+        await fetch(`${process.env.MANAGEMENT_DOMAIN}/api/auth/login`, {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(object)
+        }).catch((err) => {
+            console.log("Erro ao logar na aplicação de monitoria")
+            return
+        })
+
+        await fetch(`${process.env.COACHING_DOMAIN}/api/auth/login`, {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(object)
+        }).catch((err) => {
+            console.log("Erro ao logar na aplicação de coaching")
+            return
+        })
+
+        await fetch(`${process.env.MONITORING_DOMAIN}/api/auth/login`, {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(object)
+        }).catch((err) => {
+            console.log("Erro ao logar na aplicação de workout")
+            return
+        })
     }
     
 }
