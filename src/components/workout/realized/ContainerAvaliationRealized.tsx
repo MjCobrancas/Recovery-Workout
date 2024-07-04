@@ -15,6 +15,7 @@ export function ContainerAvaliationRealized({ avaliations, creditors, operators 
 
     const [avaliationsList, setAvaliationsList] = useState(avaliations)
     const [avaliationOperator, setAvaliationOperator] = useState<IAvaliationOperator | null>(null)
+    const [isLoadingDialog, setIsLoadingDialog] = useState(true)
     const dialogRef = useRef<HTMLDialogElement>(null)
 
     function setValueAvaliationList(value: IGetAllAvaliations[]) {
@@ -30,16 +31,21 @@ export function ContainerAvaliationRealized({ avaliations, creditors, operators 
     }
 
     async function handleGetOperatorAvaliation(id_form: number) {
+        setIsLoadingDialog(true)
+        openDialog()
         const requestForm = await getAvaliationOperator(id_form)
 
         if (!requestForm.status) {
             toast.error("Houve um erro ao buscar a avaliação do operador, tente novamente mais tarde")
 
+            setIsLoadingDialog(false)
+            closeDialog()
+
             return
         }
 
+        setIsLoadingDialog(false)
         setAvaliationOperator(requestForm.data)
-        openDialog()
     }
 
     return (
@@ -49,7 +55,11 @@ export function ContainerAvaliationRealized({ avaliations, creditors, operators 
                 className={`w-5/6 max-lg:w-3/4 p-2 rounded-lg dark:bg-slate-600 max-sm:w-full`}
                 ref={dialogRef}
             >
-                <AvaliationDialog avaliationOperator={avaliationOperator} closeDialog={closeDialog} />
+                <AvaliationDialog 
+                    avaliationOperator={avaliationOperator} 
+                    closeDialog={closeDialog} 
+                    isLoadingDialog={isLoadingDialog}
+                />
             </dialog>
             <AvaliationRealizedFilter
                 avaliations={avaliations}

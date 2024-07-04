@@ -1,4 +1,3 @@
-import { getAllCompany } from "@/api/generics/getAllCompany";
 import { getAllCreditors } from "@/api/generics/getAllCreditors";
 import { getAllWorkoutPhases } from "@/api/workout/change-phase/getAllWorkoutPhases";
 import { Ancora } from "@/components/Ancora";

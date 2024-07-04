@@ -1,6 +1,7 @@
 interface IAvaliationDialogProps {
     avaliationOperator: IAvaliationOperator | null
     closeDialog: Function
+    isLoadingDialog: boolean
 }
 
 interface IAvaliationOperator {
