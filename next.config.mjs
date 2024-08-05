@@ -10,8 +10,38 @@ const nextConfig = {
             },
             {
                 protocol: "http",
+                hostname: "localhost",
+                port: "3336"
+            },
+            {
+                protocol: "http",
+                hostname: "localhost",
+                port: "3337"
+            },
+            {
+                protocol: "http",
+                hostname: "localhost",
+                port: "3338"
+            },
+            {
+                protocol: "http",
                 hostname: "144.91.80.153",
                 port: "3335"
+            },
+            {
+                protocol: "http",
+                hostname: "144.91.80.153",
+                port: "3336"
+            },
+            {
+                protocol: "http",
+                hostname: "144.91.80.153",
+                port: "3337"
+            },
+            {
+                protocol: "http",
+                hostname: "144.91.80.153",
+                port: "3338"
             },
             {
                 protocol: "http",

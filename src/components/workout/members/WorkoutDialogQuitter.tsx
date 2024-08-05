@@ -61,7 +61,7 @@ export function WorkoutDialogQuitter({ quitterUsers }: IWorkoutDialogQuitter) {
                             </tr>
                         </thead>
                         <tbody className={`items-center p-1 odd:bg-gray-100 even:bg-gray-200 dark:odd:bg-slate-500 dark:even:bg-slate-600`}>
-                            {quitterUsers!.map((item, i) => {
+                            { quitterUsers!.length > 0 && quitterUsers!.map((item, i) => {
                                 return (
                                     <tr key={i} className={`odd:bg-gray-100 even:bg-gray-100 dark:odd:bg-slate-500 dark:even:bg-slate-600`}>
 
@@ -82,6 +82,9 @@ export function WorkoutDialogQuitter({ quitterUsers }: IWorkoutDialogQuitter) {
                             })}
                         </tbody>
                     </table>
+                    {quitterUsers!.length <= 0 && (
+                        <p className="text-base font-bold">Não há desistências de operadores este mês!</p>
+                    )}
                 </section>
 
                 <div className={`flex justify-end`}>

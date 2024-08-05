@@ -7,7 +7,7 @@ export async function createCreditorFile<T>(object: T) {
     const userParse: ITokenUserInitialValues = GetUserToken()
 
     const resp = await fetch(
-        `http://144.91.80.153:9999/workout-create-creditor-file`, {
+        `${process.env.BACKEND_DOMAIN}/workout-create-creditor-file`, {
         method: "POST",
         headers: {
             Accept: "application/json",
@@ -45,7 +45,7 @@ export async function uploadCreditorFile(
     console.log(file)
 
     const uploadFilename = await fetch(
-        `http://144.91.80.153:9999/workout-upload-file-creditor/${idForm}`,
+        `${process.env.BACKEND_DOMAIN}/workout-upload-file-creditor/${idForm}`,
         {
             method: "POST",
             headers: {

@@ -61,7 +61,7 @@ export function WorkoutDialogAble({ ableUsers }: IWorkoutDialogAble) {
                             </tr>
                         </thead>
                         <tbody className={`items-center p-1 odd:bg-gray even:bg-gray-200 dark:odd:bg-slate-500 dark:even:bg-slate-600`}>
-                            {ableUsers!.map((item, i) => {
+                            {ableUsers!.length > 0 && ableUsers!.map((item, i) => {
                                 return (
                                     <tr key={i} className={`odd:bg-gray-100 even:bg-gray-100 dark:odd:bg-slate-400/30 dark:even:bg-slate-600`}>
 
@@ -82,6 +82,9 @@ export function WorkoutDialogAble({ ableUsers }: IWorkoutDialogAble) {
                             })}
                         </tbody>
                     </table>
+                    {ableUsers!.length <= 0 && (
+                        <p className="text-base font-bold">Não há operadores que foram aptos para operação este mês!</p>
+                    )}
                 </section>
 
                 <div className={`flex justify-end`}>

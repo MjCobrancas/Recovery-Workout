@@ -198,9 +198,9 @@ export function ModalTrainingBar({ initialGlobalFiles, globalFiles, creditorFile
                 </div>
             ) : (
                 <div
-                    className={`border-solid border-[1px] border-blue-500 rounded-md flex gap-5 w-full h-16 p-2 items-center cursor-not-allowed bg-slate-200 dark:bg-slate-700 dark:border-slate-500"`}
+                    className={`border-solid border-[1px] border-blue-500 rounded-md flex gap-5 w-full py-4 p-2 items-center cursor-not-allowed bg-slate-200 dark:bg-slate-700 dark:border-slate-500"`}
                 >
-                    <FontAwesomeIcon icon={faLock} className={`text-[--bg-login] ml-2 dark:text-white`} aria-hidden="true" />
+                    <FontAwesomeIcon icon={faLock} className={`text-[--bg-login] ml-3 dark:text-white w-5 h-5`} aria-hidden="true" />
 
                     <span
                         className={`font-bold text-[--bg-login] dark:text-white`}

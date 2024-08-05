@@ -2,10 +2,20 @@
 
 import { ISelectTrainingFile } from "@/interfaces/components/SelectTrainingFile";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFileArchive } from "@fortawesome/free-solid-svg-icons";
+import { faArrowDown, faFileArchive } from "@fortawesome/free-solid-svg-icons";
 import { AvaliationForm } from "./workout/instructions/AvaliationForm";
+import { AudioRecorder, useAudioRecorder } from 'react-audio-voice-recorder';
+import { useRef } from "react";
 
 export function SelectTrainingFile({ typeFile, fileUrl, YoutubeExternalVideo, CreditorQuestions, CreditorInfo }: ISelectTrainingFile) {
+
+    const recorderControls = useAudioRecorder()
+    const audioRef = useRef<HTMLAudioElement>(null)
+
+    function handleAddAudioRecord(blob: Blob) {
+        const url = URL.createObjectURL(blob)
+        audioRef.current!.src = url
+    }
 
     return (
 
@@ -56,13 +66,32 @@ export function SelectTrainingFile({ typeFile, fileUrl, YoutubeExternalVideo, Cr
 
             {typeFile == "loading" &&
                 <div className={`p-2`}>
-                    Carregando...  {/* Colocar a roda de loading no lugar depois */}
+                    Carregando...
                 </div>
             }
 
             {typeFile == "avaliation" && (
                 <AvaliationForm creditor={CreditorInfo} questions={CreditorQuestions} />
             )}
+
+            {typeFile == "voice" &&
+                <div className="h-full py-8">
+                    <h2 className="px-8 text-2xl text-center font-bold">Ouça sua própria voz para fazer uma auto análise sobre o que você pode melhorar durante a ligação</h2>
+
+                    <div className="h-full flex flex-col justify-center items-center gap-2">
+                        <p className="flex justify-center items-center gap-5">
+                            Clique no botão abaixo para iniciar a gravação
+                            <FontAwesomeIcon icon={faArrowDown} />
+                        </p>
+                        <AudioRecorder
+                            onRecordingComplete={(blob) => handleAddAudioRecord(blob)}
+                            recorderControls={recorderControls}
+                        />
+                        <p className="mt-8">Resultado da gravação:</p>
+                        <audio ref={audioRef} controls={true} />
+                    </div>
+                </div>
+            }
         </div>
     )
 }

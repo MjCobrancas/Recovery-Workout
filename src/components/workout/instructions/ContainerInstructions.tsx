@@ -8,7 +8,7 @@ import { AvaliationButton } from "./AvaliationButton"
 import { useState } from "react"
 import { IContainerInstructionsProps } from "@/interfaces/workout/instructions/IContainerInstructions"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faLock } from "@fortawesome/free-solid-svg-icons"
+import { faLock, faMicrophoneLines } from "@fortawesome/free-solid-svg-icons"
 import { Toaster } from "react-hot-toast"
 import { IAvaliationQuestions, ICreditorQuestionsHeader } from "@/interfaces/workout/instructions/IAvaliationForm"
 
@@ -92,8 +92,8 @@ export default function ContainerInstructions({ workoutFiles, initialGlobalFiles
 
                     {workoutFiles![4].creditorFiles.length > 0 || workoutFiles![4].operatorFiles.length > 0 || workoutFiles![4].globalFiles.length > 0 ? (
                         <div className={`mt-[-1px] font-bold text-[--bg-login] border-solid border-[1px] border-blue-500 rounded-md dark:text-[--text-input-dark] ${workoutFiles![4].creditorFiles.length > 0 || workoutFiles![4].operatorFiles.length > 0 || workoutFiles![4].globalFiles.length > 0 ? "cursor-pointer hover:bg-[--hover-light-route] dark:hover:bg-[--hover-dark-route]" : "bg-slate-100 dark:bg-slate-600 dark:border-slate-500 cursor-not-allowed"}`}>
-                            <AvaliationButton 
-                                changeTypeFileToAvaliation={changeTypeFileToAvaliation} 
+                            <AvaliationButton
+                                changeTypeFileToAvaliation={changeTypeFileToAvaliation}
                                 changeTypeFile={changeTypeFile}
                             />
                         </div>
@@ -103,7 +103,7 @@ export default function ContainerInstructions({ workoutFiles, initialGlobalFiles
                                 className={`h-full flex items-center`}
                             >
                                 <div className={`ml-5 w-5 h-5`}>
-                                    <FontAwesomeIcon icon={faLock} />
+                                    <FontAwesomeIcon icon={faLock} className="w-5 h-5" />
                                 </div>
 
                                 <button
@@ -115,6 +115,24 @@ export default function ContainerInstructions({ workoutFiles, initialGlobalFiles
                             </div>
                         </div>
                     )}
+
+                    <div className={`mt-[-1px] font-bold text-[--bg-login] border-solid border-[1px] border-blue-500 rounded-md dark:text-[--text-input-dark] ${workoutFiles![4].creditorFiles.length > 0 || workoutFiles![4].operatorFiles.length > 0 || workoutFiles![4].globalFiles.length > 0 ? "cursor-pointer hover:bg-[--hover-light-route] dark:hover:bg-[--hover-dark-route]" : "bg-slate-100 dark:bg-slate-600 dark:border-slate-500 cursor-not-allowed"}`}>
+                        <div
+                            className={`h-full flex items-center`}
+                        >
+                            <div className={`ml-5 w-5 h-5`}>
+                                <FontAwesomeIcon icon={faMicrophoneLines} />
+                            </div>
+
+                            <button
+                                type="button"
+                                className={`w-full h-full p-5 text-left`}
+                                onClick={() => setTypeFile("voice")}
+                            >
+                                Exercício: Ouça sua voz
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
 

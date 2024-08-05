@@ -11,7 +11,7 @@ import Link from "next/link";
 import { ISidebarCards } from "@/interfaces/components/SidebarCards";
 import Image from "next/image";
 
-export function SidebarCards({ name, userName, position, userImage }: ISidebarCards) {
+export function SidebarCards({ name, userName, position, permission, userImage }: ISidebarCards) {
     const [showSideBar, setShowSideBar] = useState(false)
 
     function changeValueOfSideBar() {
@@ -69,6 +69,13 @@ export function SidebarCards({ name, userName, position, userImage }: ISidebarCa
                         h-[25rem]`}
                     >
                         {primaryRoutes.map((primaryRoute: PrimaryRoutes, index: number) => {
+
+                            const countPermission = primaryRoute.permissions.filter((item) => item == permission)
+
+                            if (countPermission.length == 0) {
+                                return
+                            }
+
                             if (!primaryRoute.route) {
                                 return (
                                     <details
@@ -103,6 +110,13 @@ export function SidebarCards({ name, userName, position, userImage }: ISidebarCa
                                         </summary>
 
                                         {secondRoutes.map((secondRoute: SecondRoutes, index: number) => {
+
+                                            const countPermission = secondRoute.permissions.filter((item) => item == permission)
+
+                                            if (countPermission.length == 0) {
+                                                return
+                                            }
+
                                             if (Number(primaryRoute.level) === Number(secondRoute.level)) {
                                                 return (
                                                     <Link 
@@ -144,9 +158,7 @@ export function SidebarCards({ name, userName, position, userImage }: ISidebarCa
                                 </Link>
                             )
                         }
-                        )}
-
-
+                    )}
 
                     </nav>
                     <footer className="text-[--text-footer] bg-[--bg-white] dark:bg-[--bg-dark-sidebar] p-2 font-bold flex items-center justify-center gap-2 absolute bottom-0 left-0 w-full transition-all z-50">
