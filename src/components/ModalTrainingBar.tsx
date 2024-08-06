@@ -58,7 +58,7 @@ export function ModalTrainingBar({ initialGlobalFiles, globalFiles, creditorFile
                                 return (
                                     <div key={i} className={`flex flex-col gap-1 pl-8`}>
                                         <span className={`w-[16rem] p-1 flex items-center cursor-pointer gap-3`}>
-                                            <FontAwesomeIcon icon={faFileArchive} className={`pl-4`} />
+                                            <FontAwesomeIcon icon={faFileArchive} className={`pl-4 w-5 h-5`} />
                                             <button
                                                 type="button"
                                                 onClick={() => handleInitialGlobalFiles(
@@ -81,12 +81,12 @@ export function ModalTrainingBar({ initialGlobalFiles, globalFiles, creditorFile
                                 onClick={() => setFolderInitialGlobalFiles((state) => state == "open" ? "close" : "open")}
                             >
                                 <span
-                                    className={`p-5 h-full flex align-baseline items-center gap-3 dark:text-white`}
+                                    className={`p-4 h-full flex align-baseline items-center gap-5 dark:text-white`}
                                 >
                                     {folderInitialGlobalFiles == "open" ? (
-                                        <FontAwesomeIcon icon={faFolderOpen} className="w-5 h-5" />
+                                        <FontAwesomeIcon icon={faFolderOpen} className="w-5 h-5 ml-1" />
                                     ) : (
-                                        <FontAwesomeIcon icon={faFolderClosed} className="w-5 h-5" />
+                                        <FontAwesomeIcon icon={faFolderClosed} className="w-5 h-5 ml-1" />
                                     )}
 
                                     <p className={`w-full dark:text-white`}>Treinamento Inicial</p>
@@ -184,12 +184,12 @@ export function ModalTrainingBar({ initialGlobalFiles, globalFiles, creditorFile
                             onClick={() => setFolder((state) => state == "open" ? "close" : "open")}
                         >
                             <span
-                                className={`w-full p-5 h-full flex align-baseline items-center gap-3`}
+                                className={`w-full p-4 h-full flex align-baseline items-center gap-3`}
                             >
                                 {folder == "open" ? (
-                                    <FontAwesomeIcon icon={faFolderOpen} className="w-5 h-5" />
+                                    <FontAwesomeIcon icon={faFolderOpen} className="w-5 h-5 ml-1" />
                                 ) : (
-                                    <FontAwesomeIcon icon={faFolderClosed} className="w-5 h-5" />
+                                    <FontAwesomeIcon icon={faFolderClosed} className="w-5 h-5 ml-1" />
                                 )}
                                 <p className={`w-full`}>{workoutPhaseName[index]}</p>
                             </span>

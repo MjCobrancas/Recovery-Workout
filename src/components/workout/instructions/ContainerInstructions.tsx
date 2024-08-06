@@ -98,7 +98,7 @@ export default function ContainerInstructions({ workoutFiles, initialGlobalFiles
                             />
                         </div>
                     ) : (
-                        <div className={`mt-[-1px] font-bold text-[--bg-login] border-solid border-[1px] border-blue-500 rounded-md dark:text-[--text-input-dark] bg-slate-100 dark:bg-slate-600 dark:border-slate-500 cursor-not-allowed"}`}>
+                        <div className={`mt-[-1px] font-bold text-[--bg-login] border-solid border-[1px] border-blue-500 rounded-md dark:text-[--text-input-dark] bg-slate-200 dark:bg-slate-600 dark:border-slate-500 cursor-not-allowed"}`}>
                             <div
                                 className={`h-full flex items-center`}
                             >
@@ -108,7 +108,7 @@ export default function ContainerInstructions({ workoutFiles, initialGlobalFiles
 
                                 <button
                                     type="button"
-                                    className={`w-full h-full p-5 text-left cursor-not-allowed`}
+                                    className={`w-full h-full p-4 ml-1 text-left cursor-not-allowed`}
                                 >
                                     Avaliação
                                 </button>
@@ -116,17 +116,17 @@ export default function ContainerInstructions({ workoutFiles, initialGlobalFiles
                         </div>
                     )}
 
-                    <div className={`mt-[-1px] font-bold text-[--bg-login] border-solid border-[1px] border-blue-500 rounded-md dark:text-[--text-input-dark] ${workoutFiles![4].creditorFiles.length > 0 || workoutFiles![4].operatorFiles.length > 0 || workoutFiles![4].globalFiles.length > 0 ? "cursor-pointer hover:bg-[--hover-light-route] dark:hover:bg-[--hover-dark-route]" : "bg-slate-100 dark:bg-slate-600 dark:border-slate-500 cursor-not-allowed"}`}>
+                    <div className={`mt-[-1px] font-bold text-[--bg-login] border-solid border-[1px] border-blue-500 rounded-md dark:text-[--text-input-dark]`}>
                         <div
                             className={`h-full flex items-center`}
                         >
                             <div className={`ml-5 w-5 h-5`}>
-                                <FontAwesomeIcon icon={faMicrophoneLines} />
+                                <FontAwesomeIcon icon={faMicrophoneLines} className="w-5 h-5 ml-1" />
                             </div>
 
                             <button
                                 type="button"
-                                className={`w-full h-full p-5 text-left`}
+                                className={`w-full h-full p-4 text-left`}
                                 onClick={() => setTypeFile("voice")}
                             >
                                 Exercício: Ouça sua voz

@@ -31,12 +31,12 @@ export function AvaliationButton({ changeTypeFileToAvaliation, changeTypeFile }:
             className={`h-full flex items-center`}
         >
             <div className={`ml-5 w-5 h-5`}>
-                <FontAwesomeIcon icon={faFilePen} />
+                <FontAwesomeIcon icon={faFilePen} className="w-5 h-5 ml-1" />
             </div>
 
             <button
                 type="button"
-                className={`w-full h-full p-5 text-left`}
+                className={`w-full h-full p-4 text-left`}
                 onClick={() => handleClickButton()}
             >
                 Avaliação
