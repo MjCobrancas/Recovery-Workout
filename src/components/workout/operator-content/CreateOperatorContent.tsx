@@ -1,3 +1,4 @@
+import { verifyUserToken } from "@/api/generics/verifyToken";
 import { createCreditorFile, uploadCreditorFile } from "@/api/workout/creditor-content/createCreditorFile";
 import { createOperatorFile, uploadOperatorFile } from "@/api/workout/operator-content/createOperatorFile";
 import { Button } from "@/components/Button";
@@ -6,12 +7,15 @@ import { Option } from "@/components/Option";
 import { SelectField } from "@/components/SelectField";
 import { ICreateFileOperatorForm, ICreateFileOperatorSchema, ICreateOperatorContentProps } from "@/interfaces/workout/operator-content/ICreateOperatorContent";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { twMerge } from "tailwind-merge";
 
 export function CreateOperatorContent({ operators, workoutGetAllPhases }: ICreateOperatorContentProps) {
+
+    const router = useRouter()
 
     const [isFile, setIsFile] = useState(1)
     const [fileLength, setFileLength] = useState(0)
@@ -75,7 +79,14 @@ export function CreateOperatorContent({ operators, workoutGetAllPhases }: ICreat
         setDisableButton(true)
     }
 
-    async function handleCreateCreditorFile(data: FieldValues) {
+    async function handleCreateOperatorFile(data: FieldValues) {
+
+        const isValidToken = await verifyUserToken()
+
+        if (!isValidToken) {
+            return router.push('/login')
+        }
+
         const file = getValues("file")
         const inputUrl = getValues("inputUrl")
 
@@ -153,7 +164,7 @@ export function CreateOperatorContent({ operators, workoutGetAllPhases }: ICreat
     }
 
     return (
-        <form onSubmit={handleSubmit(handleCreateCreditorFile)}>
+        <form onSubmit={handleSubmit(handleCreateOperatorFile)}>
             <div className="flex justify-center items-center gap-2">
                 <FieldForm label="date" name="Título:" obrigatory={true} error={errors.title && "Inválido"}>
                     <input

@@ -8,8 +8,12 @@ import { ICreditorFilesList, IEditSearchCreditorContentProps } from "@/interface
 import { ChangeEvent, FormEvent, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { EditCreditorContent } from "./EditCreditorContent";
+import { verifyUserToken } from "@/api/generics/verifyToken";
+import { useRouter } from "next/navigation";
 
 export function EditSearchCreditorContent({ Creditors, WorkoutGetAllPhases }: IEditSearchCreditorContentProps) {
+
+    const router = useRouter()
 
     const [disableButton, setDisableButton] = useState(false)
     const [disableAllButtons, setDisableAllButtons] = useState(false)
@@ -29,6 +33,12 @@ export function EditSearchCreditorContent({ Creditors, WorkoutGetAllPhases }: IE
 
     async function handleGetCreditorFiles(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
+
+        const isValidToken = await verifyUserToken()
+
+        if (!isValidToken) {
+            return router.push('/login')
+        }
 
         setDisableButton(true)
 

@@ -1,14 +1,18 @@
+import { verifyUserToken } from "@/api/generics/verifyToken";
 import { saveWorkoutAvaliationAnswers } from "@/api/workout/instructions/saveWorkoutAvaliationAnswers";
 import { Button } from "@/components/Button";
 import { FieldForm } from "@/components/FieldForm";
 import { Input } from "@/components/Input";
 import { AvalationFormSchema, IAvaliationForm, IAvaliationFormProps } from "@/interfaces/workout/instructions/IAvaliationForm";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FieldValues, useFieldArray, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 export function AvaliationForm({ creditor, questions }: IAvaliationFormProps) {
+
+    const router = useRouter()
 
     const { control, register, handleSubmit, watch, formState: { errors }, reset } = useForm<{ userAnswers: IAvaliationForm[] }>({
         resolver: zodResolver(AvalationFormSchema)
@@ -22,6 +26,13 @@ export function AvaliationForm({ creditor, questions }: IAvaliationFormProps) {
     const [disableSubmitButton, setDisableSubmitButton] = useState(false)
 
     async function handleSubmitAnswers(data: FieldValues) {
+
+        const isValidToken = await verifyUserToken()
+
+        if (!isValidToken) {
+            return router.push('/login')
+        }
+
         setDisableSubmitButton(true)
 
         const objectQuestionsFormat = []

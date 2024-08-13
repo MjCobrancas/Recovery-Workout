@@ -1,5 +1,6 @@
 'use client'
 
+import { verifyUserToken } from "@/api/generics/verifyToken";
 import { updateWorkoutChangedPhase } from "@/api/workout/change-phase/updateWorkoutChangedPhase";
 import { Ancora } from "@/components/Ancora";
 import { Button } from "@/components/Button";
@@ -10,10 +11,13 @@ import { IChangePhase, changePhaseFormData, changePhaseFormSchema } from "@/inte
 import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { ChangeEvent, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 
 export function ChangePhaseForm({ user, phases, backOffice, idWorkout }: IChangePhase) {
+
+    const router = useRouter()
 
     const [userFinished, setUserFinished] = useState(false)
     const [result, setResult] = useState<"Created" | false>(false)
@@ -44,6 +48,13 @@ export function ChangePhaseForm({ user, phases, backOffice, idWorkout }: IChange
     }
 
     async function updateWorkoutPhase(data: FieldValues) {
+
+        const isValidToken = await verifyUserToken()
+
+        if (!isValidToken) {
+            return router.push('/login')
+        }
+
         setDisableButton(true)
 
         const object = {
@@ -65,8 +76,6 @@ export function ChangePhaseForm({ user, phases, backOffice, idWorkout }: IChange
             setDisableButton(false)
         }, 3000);
     }
-
-
 
     return (
 

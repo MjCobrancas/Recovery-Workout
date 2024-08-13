@@ -1,3 +1,4 @@
+import { verifyUserToken } from "@/api/generics/verifyToken";
 import { getCreditorFilesList } from "@/api/workout/creditor-content/getCreditorFiles";
 import { removeCreditorFile } from "@/api/workout/creditor-content/removeCreditorFile";
 import { updateCreditorFiles } from "@/api/workout/creditor-content/updateCreditorFiles";
@@ -9,11 +10,14 @@ import { ICreditorFilesForm, ICreditorFilesObject, ICreditorFilesSchema, IEditCr
 import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useEffect, useMemo } from "react";
 import { FieldValues, useFieldArray, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 export function EditCreditorContent({ Creditors, WorkoutGetAllPhases, setValueDisableAllButtons, disableAllButtons, setValueCreditorFiles }: IEditCreditorContentProps) {
+
+    const router = useRouter()
 
     const { control, register, handleSubmit, watch, formState: { errors }, reset } = useForm<{ creditorFiles: ICreditorFilesForm[] }>({
         defaultValues: {
@@ -67,6 +71,13 @@ export function EditCreditorContent({ Creditors, WorkoutGetAllPhases, setValueDi
     }
 
     async function handleUpdateCreditorFiles(data: FieldValues) {
+
+        const isValidToken = await verifyUserToken()
+
+        if (!isValidToken) {
+            return router.push('/login')
+        }
+
         let statusError = false
         setValueDisableAllButtons(true)
 

@@ -1,16 +1,27 @@
 'use client'
 
+import { verifyUserToken } from "@/api/generics/verifyToken";
 import { getAvaliationQuestionsByIdUser } from "@/api/workout/instructions/avaliations/getAvaliationQuestionsByUser";
 import { IResultDefaultResponse } from "@/interfaces/Generics";
 import { IAvaliationButtonProps } from "@/interfaces/workout/instructions/IAvaliationButton";
 import { IGetAvaliationQuestionsResponse } from "@/interfaces/workout/instructions/IAvaliationForm";
 import { faFilePen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 export function AvaliationButton({ changeTypeFileToAvaliation, changeTypeFile }: IAvaliationButtonProps) {
 
+    const router = useRouter()
+
     async function handleClickButton() {
+
+        const isValidToken = await verifyUserToken()
+
+        if (!isValidToken) {
+            return router.push('/login')
+        }
+
         changeTypeFile("loading")
         const getQuestions: IResultDefaultResponse<IGetAvaliationQuestionsResponse | null> = await getAvaliationQuestionsByIdUser()
 

@@ -1,17 +1,19 @@
-import { getCreditorFilesList } from "@/api/workout/creditor-content/getCreditorFiles";
 import { getOperatorFilesList } from "@/api/workout/operator-content/getOperatorFiles";
 import { Button } from "@/components/Button";
 import { FieldForm } from "@/components/FieldForm";
 import { Option } from "@/components/Option";
 import { SelectField } from "@/components/SelectField";
 import { IResultDefaultResponse } from "@/interfaces/Generics";
-import { ICreditorFilesList, IEditSearchCreditorContentProps } from "@/interfaces/workout/creditor-content/IEditCreditorContent";
 import { IEditSearchOperatorContentProps, IOperatorFilesList } from "@/interfaces/workout/operator-content/IEditOperatorContent";
 import { ChangeEvent, FormEvent, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { EditOperatorContent } from "./EditOperatorContent";
+import { verifyUserToken } from "@/api/generics/verifyToken";
+import { useRouter } from "next/navigation";
 
 export function EditSearchOperatorContent({ operators, workoutGetAllPhases }: IEditSearchOperatorContentProps) {
+
+    const router = useRouter()
 
     const [disableButton, setDisableButton] = useState(false)
     const [disableAllButtons, setDisableAllButtons] = useState(false)
@@ -31,6 +33,12 @@ export function EditSearchOperatorContent({ operators, workoutGetAllPhases }: IE
 
     async function handleGetOperatorFiles(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
+
+        const isValidToken = await verifyUserToken()
+
+        if (!isValidToken) {
+            return router.push('/login')
+        }
 
         setDisableButton(true)
 

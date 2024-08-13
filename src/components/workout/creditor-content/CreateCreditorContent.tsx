@@ -1,3 +1,4 @@
+import { verifyUserToken } from "@/api/generics/verifyToken";
 import { createCreditorFile, uploadCreditorFile } from "@/api/workout/creditor-content/createCreditorFile";
 import { Button } from "@/components/Button";
 import { FieldForm } from "@/components/FieldForm";
@@ -5,12 +6,15 @@ import { Option } from "@/components/Option";
 import { SelectField } from "@/components/SelectField";
 import { ICreateCreditorContentProps, ICreateFileCreditorForm, ICreateFileCreditorSchema } from "@/interfaces/workout/creditor-content/ICreateCreditorContent";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { twMerge } from "tailwind-merge";
 
 export function CreateCreditorContent({ Creditors, WorkoutAllPhases }: ICreateCreditorContentProps) {
+
+    const router = useRouter()
 
     const [isFile, setIsFile] = useState(1)
     const [fileLength, setFileLength] = useState(0)
@@ -75,6 +79,13 @@ export function CreateCreditorContent({ Creditors, WorkoutAllPhases }: ICreateCr
     }
 
     async function handleCreateCreditorFile(data: FieldValues) {
+
+        const isValidToken = await verifyUserToken()
+
+        if (!isValidToken) {
+            return router.push('/login')
+        }
+
         const file = getValues("file")
         const inputUrl = getValues("inputUrl")
 
