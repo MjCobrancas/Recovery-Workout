@@ -10,8 +10,12 @@ import toast, { Toaster } from "react-hot-toast"
 import { getAvaliationOperator } from "@/api/workout/prepare-avaliation/getAvaliationOperator"
 import { IAvaliationOperator } from "@/interfaces/workout/realized/IAvaliationDialog"
 import { AvaliationDialog } from "./AvalationDialog"
+import { useRouter } from "next/navigation"
+import { verifyUserToken } from "@/api/generics/verifyToken"
 
 export function ContainerAvaliationRealized({ avaliations, creditors, operators }: IContainerAvaliationRealized) {
+
+    const router = useRouter()
 
     const [avaliationsList, setAvaliationsList] = useState(avaliations)
     const [avaliationOperator, setAvaliationOperator] = useState<IAvaliationOperator | null>(null)
@@ -31,6 +35,13 @@ export function ContainerAvaliationRealized({ avaliations, creditors, operators 
     }
 
     async function handleGetOperatorAvaliation(id_form: number) {
+
+        const isValidToken = await verifyUserToken()
+
+        if (!isValidToken) {
+            return router.push('/login')
+        }
+
         setIsLoadingDialog(true)
         openDialog()
         const requestForm = await getAvaliationOperator(id_form)

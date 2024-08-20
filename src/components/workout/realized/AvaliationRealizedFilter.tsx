@@ -1,3 +1,4 @@
+import { verifyUserToken } from "@/api/generics/verifyToken";
 import { avaliationFilter } from "@/api/workout/prepare-avaliation/avaliationFilter";
 import { Button } from "@/components/Button";
 import { FieldForm } from "@/components/FieldForm";
@@ -6,11 +7,14 @@ import { Option } from "@/components/Option";
 import { SelectField } from "@/components/SelectField";
 import { IAvaliationRealizedFilterForm, IAvaliationRealizedFilterFormSchema, IAvaliationRealizedFilterProps } from "@/interfaces/workout/realized/IAvaliationRealizedFilter";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 export function AvaliationRealizedFilter({ avaliations, creditors, operators, setValueAvaliationList }: IAvaliationRealizedFilterProps) {
+
+    const router = useRouter()
 
     const [disableButton, setDisableButton] = useState(false)
     const [didFilter, setDidFilter] = useState(false)
@@ -25,6 +29,12 @@ export function AvaliationRealizedFilter({ avaliations, creditors, operators, se
     })
 
     async function handleFilter(data: FieldValues) {
+
+        const isValidToken = await verifyUserToken()
+
+        if (!isValidToken) {
+            return router.push('/login')
+        }
 
         setDisableButton(true)
         setDidFilter(true)

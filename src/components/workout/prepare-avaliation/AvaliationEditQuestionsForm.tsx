@@ -1,3 +1,4 @@
+import { verifyUserToken } from "@/api/generics/verifyToken";
 import { updateAvaliationQuestions } from "@/api/workout/prepare-avaliation/updateAvaliationQuestions";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
@@ -6,11 +7,14 @@ import { ICreditorAvaliationQuestions, creditorAvaliationQuestionsSchema } from 
 import { faArrowDown, faArrowUp, faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { FieldValues, useFieldArray, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 export function AvaliationEditQuestionsForm({ creditorQuestions, positionsValue, disableAllButtons, setValueDisableAllButtons }: IAvaliationEditQuestionsFormProps) {
+
+    const router = useRouter()
 
     const [lowestPosition, setLowestPosition] = useState(positionsValue[0])
     const [highestPosition, setHighestPosition] = useState(positionsValue[1])
@@ -101,6 +105,13 @@ export function AvaliationEditQuestionsForm({ creditorQuestions, positionsValue,
     }
 
     async function handleUpdateQuestions(data: FieldValues) {
+
+        const isValidToken = await verifyUserToken()
+
+        if (!isValidToken) {
+            return router.push('/login')
+        }
+
         setValueDisableAllButtons(true)
         const object = { questions: data.creditorAvaliationQuestions }
 

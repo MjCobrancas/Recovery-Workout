@@ -43,7 +43,6 @@ export function ContainerOperatorContent({ operators, workoutGetAllPhases }: ICo
                         OnClick={() => handleNavigateButtons()}
                     />
                 </div>
-
             </div>
 
             <div className="p-8 mt-5">

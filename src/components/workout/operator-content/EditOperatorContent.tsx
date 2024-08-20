@@ -1,6 +1,4 @@
-import { getCreditorFilesList } from "@/api/workout/creditor-content/getCreditorFiles";
-import { removeCreditorFile } from "@/api/workout/creditor-content/removeCreditorFile";
-import { updateCreditorFiles } from "@/api/workout/creditor-content/updateCreditorFiles";
+import { verifyUserToken } from "@/api/generics/verifyToken";
 import { getOperatorFilesList } from "@/api/workout/operator-content/getOperatorFiles";
 import { removeOperatorFile } from "@/api/workout/operator-content/removeOperatorFile";
 import { updateOperatorFiles } from "@/api/workout/operator-content/updateOperatorFile";
@@ -12,11 +10,14 @@ import { IEditOperatorContentProps, IOperatorFilesForm, IOperatorFilesObject, IO
 import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useEffect, useMemo } from "react";
 import { FieldValues, useFieldArray, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 export function EditOperatorContent({ operators, workoutGetAllPhases, setValueDisableAllButtons, disableAllButtons, setValueOperatorFiles }: IEditOperatorContentProps) {
+
+    const router = useRouter()
 
     const { control, register, handleSubmit, watch, formState: { errors }, reset } = useForm<{ operatorFiles: IOperatorFilesForm[] }>({
         defaultValues: {
@@ -69,7 +70,14 @@ export function EditOperatorContent({ operators, workoutGetAllPhases, setValueDi
         update(index, object)
     }
 
-    async function handleUpdateCreditorFiles(data: FieldValues) {
+    async function handleUpdateOperatorFiles(data: FieldValues) {
+
+        const isValidToken = await verifyUserToken()
+
+        if (!isValidToken) {
+            return router.push('/login')
+        }
+
         let statusError = false
         setValueDisableAllButtons(true)
 
@@ -130,8 +138,10 @@ export function EditOperatorContent({ operators, workoutGetAllPhases, setValueDi
 
     }
 
+    console.log(errors)
+
     return (
-        <form className="w-full mt-10 flex flex-col" onSubmit={handleSubmit(handleUpdateCreditorFiles)}>
+        <form className="w-full mt-10 flex flex-col" onSubmit={handleSubmit(handleUpdateOperatorFiles)}>
             <table className="w-full">
                 <thead className="w-full bg-gray-200 dark:bg-slate-600">
                     <tr>

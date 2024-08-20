@@ -1,14 +1,18 @@
+import { verifyUserToken } from "@/api/generics/verifyToken";
 import { createAvaliationQuestion } from "@/api/workout/prepare-avaliation/createAvaliationQuestion";
 import { Button } from "@/components/Button";
 import { FieldForm } from "@/components/FieldForm";
 import { Input } from "@/components/Input";
 import { IAvaliationCreateQuestionFormProps } from "@/interfaces/workout/prepare-avaliation/IAvaliationCreateQuestionForm";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { FieldValues, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { z } from "zod";
 
 export function AvaliationCreateQuestionForm({ idCreditor, disableAllButtons, setValueDisableAllButtons }: IAvaliationCreateQuestionFormProps) {
+
+    const router = useRouter()
 
     const { register, handleSubmit, watch, formState: { errors }, reset } = useForm<{ question: string }>({
         defaultValues: {
@@ -18,6 +22,13 @@ export function AvaliationCreateQuestionForm({ idCreditor, disableAllButtons, se
     })
 
     async function handleCreateQuestion(data: FieldValues) {
+
+        const isValidToken = await verifyUserToken()
+
+        if (!isValidToken) {
+            return router.push('/login')
+        }
+
         setValueDisableAllButtons(true)
 
         const object = {

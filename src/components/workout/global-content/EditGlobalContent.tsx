@@ -1,3 +1,4 @@
+import { verifyUserToken } from "@/api/generics/verifyToken";
 import { getGlobalFiles } from "@/api/workout/global-content/getGlobalFiles";
 import { removeGlobalFiles } from "@/api/workout/global-content/removeGlobalFiles";
 import { removeInitialGlobalFiles } from "@/api/workout/global-content/removeInitialGlobalFiles";
@@ -6,16 +7,18 @@ import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { Option } from "@/components/Option";
 import { SelectField } from "@/components/SelectField";
-import { IWorkoutAllGlobalFiles } from "@/interfaces/workout/global-content/GlobalContent";
 import { IEditGlobalFilesForm, IEditGlobalFilesProps, IEditGlobalFilesSchema, IObjectBackendRequest } from "@/interfaces/workout/global-content/IEditGlobalFiles";
 import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { FieldValues, useFieldArray, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 export function EditGlobalContent({ globalAllFiles, WorkoutAllPhases, setGlobalFiles }: IEditGlobalFilesProps) {
+
+    const router = useRouter()
 
     const [disableButton, setDisableButton] = useState(false)
 
@@ -70,6 +73,13 @@ export function EditGlobalContent({ globalAllFiles, WorkoutAllPhases, setGlobalF
     }
 
     async function handleEditGlobalFiles(data: FieldValues) {
+
+        const isValidToken = await verifyUserToken()
+
+        if (!isValidToken) {
+            return router.push('/login')
+        }
+
         setDisableButton(true)
         let statusError = false
 

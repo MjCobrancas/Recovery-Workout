@@ -11,8 +11,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faKeyboard, faLock, faMicrophoneLines } from "@fortawesome/free-solid-svg-icons"
 import { Toaster } from "react-hot-toast"
 import { IAvaliationQuestions, ICreditorQuestionsHeader } from "@/interfaces/workout/instructions/IAvaliationForm"
+import { verifyUserToken } from "@/api/generics/verifyToken"
+import { useRouter } from "next/navigation"
 
 export default function ContainerInstructions({ workoutFiles, initialGlobalFiles, quotes }: IContainerInstructionsProps) {
+
+    const router = useRouter()
 
     const [typeFile, setTypeFile] = useState("none")
     const [fileUrl, setFileUrl] = useState("")
@@ -30,12 +34,19 @@ export default function ContainerInstructions({ workoutFiles, initialGlobalFiles
         setTypeFile(type)
     }
 
-    function getFileCallBack(
+    async function getFileCallBack(
         Id_File_Creditor: number,
         YoutubeExternalVideo: string | null,
         Function_Name: Function,
         FileExtension: string
     ) {
+
+        const isValidToken = await verifyUserToken()
+
+        if (!isValidToken) {
+            return router.push('/login')
+        }
+
         setTypeFile("loading")
         if (YoutubeExternalVideo == null) {
             const request = Function_Name(

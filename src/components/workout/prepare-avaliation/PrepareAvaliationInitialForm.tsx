@@ -1,3 +1,4 @@
+import { verifyUserToken } from "@/api/generics/verifyToken";
 import { getCreditorAvaliationQuestions } from "@/api/workout/prepare-avaliation/getCreditorAvaliationQuestions";
 import { Button } from "@/components/Button";
 import { FieldForm } from "@/components/FieldForm";
@@ -5,11 +6,14 @@ import { Option } from "@/components/Option";
 import { SelectField } from "@/components/SelectField";
 import { IPrepareAvaliationInitialForm, IPrepareAvaliationInitialFormProps, IPrepareAvaliationInitialFormSchema } from "@/interfaces/workout/prepare-avaliation/IPrepareAvaliationInitialForm";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 export function PrepareAvaliationInitialForm({ creditors, setValueShowTypeInterface, setValueIdCreditor, disableAllButtons, setValueCreditorQuestions, setValuePositions }: IPrepareAvaliationInitialFormProps) {
+
+    const router = useRouter()
 
     const { register, handleSubmit, watch, formState: { errors }, reset } = useForm<IPrepareAvaliationInitialForm>({
         defaultValues: {
@@ -31,6 +35,13 @@ export function PrepareAvaliationInitialForm({ creditors, setValueShowTypeInterf
     }
 
     async function handleSubmitInitialForm(data: FieldValues) {
+
+        const isValidToken = await verifyUserToken()
+
+        if (!isValidToken) {
+            return router.push('/login')
+        }
+
         if (data.selectOption == "1") {
             setHeaderSelected(true)
             setDidFilter(true)
