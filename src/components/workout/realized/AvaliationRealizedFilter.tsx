@@ -18,7 +18,7 @@ export function AvaliationRealizedFilter({ avaliations, creditors, operators, se
 
     const [disableButton, setDisableButton] = useState(false)
     const [didFilter, setDidFilter] = useState(false)
-    const { register, handleSubmit, watch, formState: { errors }, reset } = useForm<IAvaliationRealizedFilterForm>({
+    const { register, handleSubmit, watch, formState: { errors }, reset, setError } = useForm<IAvaliationRealizedFilterForm>({
         defaultValues: {
             id_creditor: "0",
             id_user: "0",
@@ -34,6 +34,13 @@ export function AvaliationRealizedFilter({ avaliations, creditors, operators, se
 
         if (!isValidToken) {
             return router.push('/login')
+        }
+
+        if (data.select_date != "" && data.date != "") {
+            setError("date", { type: '400' })
+            setError("select_date", { type: '400' })
+
+            return
         }
 
         setDisableButton(true)

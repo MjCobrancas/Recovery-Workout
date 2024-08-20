@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import { faArrowRightFromBracket, faMoon } from '@fortawesome/free-solid-svg-icons';
 import RemoveUserCookies from '@/api/auth/RemoveUserCookies';
 import { useRouter } from 'next/navigation';
+import { getTheme } from '@/api/theme/getTheme';
+import { toggleThemeSetCookie } from '@/api/theme/toggleTheme';
 
 export function Header() {
     const [actualTheme, setActualTheme] = useState("light")
@@ -13,26 +15,58 @@ export function Header() {
     const router = useRouter()
 
     useEffect(() => {
-        const theme = localStorage.getItem("theme")
-        if (theme == "dark" && firstTime) {
-            setFirstTime(false)
-            document.querySelector('html')?.classList.add("dark")
-            setActualTheme(theme!)
+        async function handleInitialTheme() {
+            const theme = await getTheme()
+    
+            if (!theme) {
+                setFirstTime(false)
+                await toggleThemeSetCookie("dark")
+
+                document.querySelector('html')?.classList.remove("dark")
+                setActualTheme("light")
+    
+                return
+            }
+    
+            const themeValue = JSON.parse(theme?.value).theme
+    
+            if (themeValue == "dark" && firstTime) {
+                setFirstTime(false)
+                document.querySelector('html')?.classList.add("dark")
+                setActualTheme(themeValue)
+            }
         }
+
+        handleInitialTheme()
     }, [firstTime])
 
-    function toggleTheme() {
+    async function toggleTheme() {
+
+        const theme = await getTheme()
+
+        if (!theme) {
+
+            await toggleThemeSetCookie("light")
+
+            document.querySelector('html')?.classList.remove("dark")
+            setActualTheme("light")
+
+            return
+        }
 
         if (actualTheme == "dark") {
+            await toggleThemeSetCookie("dark")
+
             document.querySelector('html')?.classList.remove("dark")
-            localStorage.setItem("theme", "light")
             setActualTheme("light")
+
             return
         } 
         
         if (actualTheme == "light") {
+            await toggleThemeSetCookie("light")
+
             document.querySelector('html')?.classList.add("dark")
-            localStorage.setItem("theme", "dark")
             setActualTheme("dark")
 
             return 
