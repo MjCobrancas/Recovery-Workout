@@ -6,8 +6,9 @@ import { faArrowDown, faFileArchive } from "@fortawesome/free-solid-svg-icons";
 import { AvaliationForm } from "./workout/instructions/AvaliationForm";
 import { AudioRecorder, useAudioRecorder } from 'react-audio-voice-recorder';
 import { useRef } from "react";
+import { ContainerTyperace } from "./workout/typerace/ContainerTyperace";
 
-export function SelectTrainingFile({ typeFile, fileUrl, YoutubeExternalVideo, CreditorQuestions, CreditorInfo }: ISelectTrainingFile) {
+export function SelectTrainingFile({ quotes, typeFile, fileUrl, YoutubeExternalVideo, CreditorQuestions, CreditorInfo }: ISelectTrainingFile) {
 
     const recorderControls = useAudioRecorder()
     const audioRef = useRef<HTMLAudioElement>(null)
@@ -90,6 +91,19 @@ export function SelectTrainingFile({ typeFile, fileUrl, YoutubeExternalVideo, Cr
                         <p className="mt-8">Resultado da gravação:</p>
                         <audio ref={audioRef} controls={true} />
                     </div>
+                </div>
+            }
+
+            {typeFile == "keyboard" &&
+                <div className="h-full py-8">
+                    <h2 className="px-8 text-2xl text-center font-bold mb-2">
+                        Clique em iniciar para começar o exercício
+                    </h2>
+
+                    <div className="h-full flex justify-center items-center gap-2">
+                        <ContainerTyperace quotes={quotes} />
+                    </div>
+
                 </div>
             }
         </div>

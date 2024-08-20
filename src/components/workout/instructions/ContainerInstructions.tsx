@@ -8,13 +8,13 @@ import { AvaliationButton } from "./AvaliationButton"
 import { useState } from "react"
 import { IContainerInstructionsProps } from "@/interfaces/workout/instructions/IContainerInstructions"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faLock, faMicrophoneLines } from "@fortawesome/free-solid-svg-icons"
+import { faKeyboard, faLock, faMicrophoneLines } from "@fortawesome/free-solid-svg-icons"
 import { Toaster } from "react-hot-toast"
 import { IAvaliationQuestions, ICreditorQuestionsHeader } from "@/interfaces/workout/instructions/IAvaliationForm"
 import { verifyUserToken } from "@/api/generics/verifyToken"
 import { useRouter } from "next/navigation"
 
-export default function ContainerInstructions({ workoutFiles, initialGlobalFiles }: IContainerInstructionsProps) {
+export default function ContainerInstructions({ workoutFiles, initialGlobalFiles, quotes }: IContainerInstructionsProps) {
 
     const router = useRouter()
 
@@ -81,7 +81,7 @@ export default function ContainerInstructions({ workoutFiles, initialGlobalFiles
 
             <div className={`flex justify-between m-2`}>
                 <div className={`flex flex-col flex-1 gap-2 max-w-[50rem] mr-2 border-[1px] border-gray-300 rounded-md h-[500px]`}>
-                    <SelectTrainingFile typeFile={typeFile} fileUrl={fileUrl} YoutubeExternalVideo={youtubeUrl} CreditorQuestions={CreditorQuestions} CreditorInfo={CreditorInfo} />
+                    <SelectTrainingFile quotes={quotes} typeFile={typeFile} fileUrl={fileUrl} YoutubeExternalVideo={youtubeUrl} CreditorQuestions={CreditorQuestions} CreditorInfo={CreditorInfo} />
                 </div>
 
                 <div id="pdf" className={`flex flex-col justify-start gap-1 w-1/3 min-w-[15rem] rounded-md border-2 p-1 max-h-[500px] overflow-y-auto dark:border-slate-500`}>
@@ -141,6 +141,24 @@ export default function ContainerInstructions({ workoutFiles, initialGlobalFiles
                                 onClick={() => setTypeFile("voice")}
                             >
                                 Exercício: Ouça sua voz
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className={`mt-[-1px] font-bold text-[--bg-login] border-solid border-[1px] border-blue-500 rounded-md dark:text-[--text-input-dark]`}>
+                        <div
+                            className={`h-full flex items-center`}
+                        >
+                            <div className={`ml-5 w-5 h-5`}>
+                                <FontAwesomeIcon icon={faKeyboard} className="w-5 h-5 ml-1" />
+                            </div>
+
+                            <button
+                                type="button"
+                                className={`w-full h-full p-4 text-left`}
+                                onClick={() => setTypeFile("keyboard")}
+                            >
+                                Exercício: Precisão na digitação
                             </button>
                         </div>
                     </div>
