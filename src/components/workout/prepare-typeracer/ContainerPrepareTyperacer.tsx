@@ -6,6 +6,7 @@ import { Toaster } from "react-hot-toast"
 import { PrepareTyperacerInitialForm } from "../prepare-typeracer/PrepareTyperacerInitialForm"
 import { EditQuotesForm } from "./EditQuotesForm"
 import { IQuotes } from "@/interfaces/workout/prepare-typeracer/IEditQuotes"
+import { TyperacerCreatePhrase} from "./TyperacerCreatePhrase"
 
 export function ContainerPrepareTyperacer({ creditors }: IContainerPrepareAvaliationProps) {
 
@@ -42,7 +43,7 @@ export function ContainerPrepareTyperacer({ creditors }: IContainerPrepareAvalia
                 />
 
                 {showTypeInterface == "create-quote" && (
-                    <p>Criar frases digitação do credor</p>
+                    <TyperacerCreatePhrase idCreditor={idCreditor} disableAllButtons={disableAllButtons} setValueDisableAllButtons={setValueDisableAllButtons} />
                 )}
 
                 {showTypeInterface == "edit-quotes" && (

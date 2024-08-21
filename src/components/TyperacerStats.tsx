@@ -22,6 +22,7 @@ const StatsDisplay: FC<StatsDisplayProps> = ({
     const wps = numOfWords / typeDurationInSeconds;
     const wpm = Math.floor(wps * 60);
     const cpm = (cpw / typeDurationInSeconds ) * 60
+    
 
     return (
         <div className="w-fit h-fit border rounded-xl p-4 my-2">
@@ -30,9 +31,9 @@ const StatsDisplay: FC<StatsDisplayProps> = ({
             </p>
             <p className="mt-2">Suas estatisticas</p>
             <ul>
-                <li>WPM: {wpm}</li>
-                <li>WPS: {wps.toFixed(2)}</li>
-                <li>CPM: {cpm.toFixed(0)}</li>
+                <li>Palavras Por Minuto: {wpm}</li>
+                <li>Palavras Por Segundo: {wps.toFixed(2)}</li>
+                <li>Caracteres Por Minuto: {cpm.toFixed(0)}</li>
             </ul>
             <button
                 onClick={onClickNextQuote}

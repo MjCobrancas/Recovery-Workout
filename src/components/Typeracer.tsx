@@ -3,12 +3,12 @@
 import { useEffect, useMemo, useState } from "react";
 import { Button } from "./Button";
 import { countQuote, GameState, IQuotes, IQuotesData } from "@/interfaces/workout/instructions/ITyperacer";
-import StatsDisplay from "./TyperaceStats";
+import StatsDisplay from "./TyperacerStats";
 
 const inputId = 'typeracer-input'
 
 export function Typeracer({ quotesData }: IQuotesData) {
-    
+
     const [isVisible, setIsVisible] = useState(true)
     const [quote, setQuote] = useState<IQuotes>();
     const [text, setText] = useState<string>("");
@@ -105,47 +105,52 @@ export function Typeracer({ quotesData }: IQuotesData) {
 
     return (
         <>
-            <Button
-                type="button"
-                name="start"
-                text="Iniciar"
-                styles={`w-[150px] h-[50px] ${isVisible ? "block" : "hidden"}`}
-                OnClick={() => { setIsVisible(!isVisible) }}
-                disabled={!isVisible}
-            />
-
-            {!isVisible &&
-                <div className="px-[120px]">
-                    <p className="font-mono">
-                        <span className="text-green-600 text-center">{alreadyTypedWords} </span>
-                        <span className="text-green-600 text-center">{correctGreenWord}</span>
-                        <span className="text-red-700 bg-red-200 text-center">{wrongRedWord}</span>
-                        <span className="underline text-center">{currentWord?.slice(text.length)}</span>
-                        <span className="text-black text-center"> {wordsToBeTyped}</span>
-                    </p>
-                    <input
-                        className="w-full border-black border px-4 py-2"
-                        onChange={(text) => setText(text.target.value)}
-                        value={text}
-                        disabled={gameState == GameState.VIEW_STATS}
-                        id={inputId}
-                        autoFocus={true}
-                        autoComplete="off"
+            {quotesData.length > 0 ? (
+                <>
+                    <Button
+                        type="button"
+                        name="start"
+                        text="Iniciar"
+                        styles={`w-[150px] h-[50px] ${isVisible ? "block" : "hidden"}`}
+                        OnClick={() => { setIsVisible(!isVisible) }}
+                        disabled={!isVisible}
                     />
-                    {quote && gameState == GameState.VIEW_STATS && (
-                        <StatsDisplay
-                            cpw={alreadyTypedWords.length}
-                            startTime={startTime}
-                            endTime={endTime}
-                            quote={quote}
-                            numOfWords={quotesSplit.length}
-                            onClickNextQuote={nextQuote}
-                        />
-                    )}
-                </div>
+
+                    {!isVisible &&
+                        <div className="px-[120px]">
+                            <p className="font-mono">
+                                <span className="text-green-600 text-center">{alreadyTypedWords} </span>
+                                <span className="text-green-600 text-center">{correctGreenWord}</span>
+                                <span className="text-red-700 bg-red-200 text-center">{wrongRedWord}</span>
+                                <span className="underline text-center">{currentWord?.slice(text.length)}</span>
+                                <span className="text-black text-center"> {wordsToBeTyped}</span>
+                            </p>
+                            <input
+                                className="w-full border-black border px-4 py-2"
+                                onChange={(text) => setText(text.target.value)}
+                                value={text}
+                                disabled={gameState == GameState.VIEW_STATS}
+                                id={inputId}
+                                autoFocus={true}
+                                autoComplete="off"
+                            />
+                            {quote && gameState == GameState.VIEW_STATS && (
+                                <StatsDisplay
+                                    cpw={alreadyTypedWords.length}
+                                    startTime={startTime}
+                                    endTime={endTime}
+                                    quote={quote}
+                                    numOfWords={quotesSplit.length}
+                                    onClickNextQuote={nextQuote}
+                                />
+                            )}
+                        </div>
+                    }
+                </>
+            ) : <p className={`text-red-500 font-bold`}>
+                Não há nenhum exercício de digitação cadastrado nesse credor.
+            </p>
             }
-
-
         </>
     )
 }
