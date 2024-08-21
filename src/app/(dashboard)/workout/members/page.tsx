@@ -27,7 +27,7 @@ export default async function workoutMembers() {
                 styles={`max-md:text-[2rem]`}
             />
 
-            <div className={`flex items-end justify-between ml-2`}>
+            <div className={`relative flex items-end justify-between ml-2`}>
                 <div className={`flex items-end gap-2`}>
                     <Ancora
                         title="Prepare a Avaliação"
@@ -58,6 +58,15 @@ export default async function workoutMembers() {
                     >
                         Enviar conteúdo global
                     </Link>
+
+                    <Ancora
+                        title="Gerenciar Typeracer"
+                        toGo="/workout/prepare-typeracer"
+                        styles={`absolute -top-12 border border-blue-500 rounded-md bg-transparent
+                        duration-200 px-[5px] py-2 text-blue-500 hover:bg-blue-500 dark:bg-transparent
+                        dark:hover:bg-blue-500
+                        w-fit text-md`}
+                    />
                 </div>
 
                 <div className={`flex items-end`}>

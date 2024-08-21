@@ -188,5 +188,10 @@ export const actionRoutes: Array<ActionRoutes> = [
         level: 9,
         permissions: [1],
         route: "/workout/prepare-avaliation"
+    },
+    {
+        level: 9,
+        permissions: [1],
+        route: "/workout/prepare-typeracer"
     }
 ]
