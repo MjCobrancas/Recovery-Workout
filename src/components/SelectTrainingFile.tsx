@@ -6,7 +6,7 @@ import { faArrowDown, faFileArchive } from "@fortawesome/free-solid-svg-icons";
 import { AvaliationForm } from "./workout/instructions/AvaliationForm";
 import { AudioRecorder, useAudioRecorder } from 'react-audio-voice-recorder';
 import { useRef } from "react";
-import { ContainerTyperace } from "./workout/typerace/ContainerTyperace";
+import { ContainerTyperacer } from "./workout/typeracer/ContainerTyperacer";
 
 export function SelectTrainingFile({ quotes, typeFile, fileUrl, YoutubeExternalVideo, CreditorQuestions, CreditorInfo }: ISelectTrainingFile) {
 
@@ -101,7 +101,7 @@ export function SelectTrainingFile({ quotes, typeFile, fileUrl, YoutubeExternalV
                     </h2>
 
                     <div className="h-full flex justify-center items-center gap-2">
-                        <ContainerTyperace quotes={quotes} />
+                        <ContainerTyperacer quotes={quotes} />
                     </div>
 
                 </div>

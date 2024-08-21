@@ -5,6 +5,7 @@ import { useState } from "react"
 import { Toaster } from "react-hot-toast"
 import { ICreditorAvaliationQuestions } from "@/interfaces/workout/prepare-avaliation/IPrepareAvaliationInitialForm"
 import { PrepareTyperacerInitialForm } from "../prepare-typeracer/PrepareTyperacerInitialForm"
+import { TyperacerCreatePhrase} from "./TyperacerCreatePhrase"
 
 export function ContainerPrepareTyperacer({ creditors }: IContainerPrepareAvaliationProps) {
 
@@ -47,7 +48,7 @@ export function ContainerPrepareTyperacer({ creditors }: IContainerPrepareAvalia
                 />
 
                 {showTypeInterface == "create-quote" && (
-                    <p>Criar frases digitação do credor</p>
+                    <TyperacerCreatePhrase idCreditor={idCreditor} disableAllButtons={disableAllButtons} setValueDisableAllButtons={setValueDisableAllButtons} />
                 )}
 
                 {showTypeInterface == "edit-quotes" && (
