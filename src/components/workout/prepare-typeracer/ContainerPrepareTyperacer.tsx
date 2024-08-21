@@ -3,22 +3,18 @@
 import { IContainerPrepareAvaliationProps } from "@/interfaces/workout/prepare-avaliation/IContainerPrepareAvaliation"
 import { useState } from "react"
 import { Toaster } from "react-hot-toast"
-import { ICreditorAvaliationQuestions } from "@/interfaces/workout/prepare-avaliation/IPrepareAvaliationInitialForm"
 import { PrepareTyperacerInitialForm } from "../prepare-typeracer/PrepareTyperacerInitialForm"
+import { EditQuotesForm } from "./EditQuotesForm"
+import { IQuotes } from "@/interfaces/workout/prepare-typeracer/IEditQuotes"
 
 export function ContainerPrepareTyperacer({ creditors }: IContainerPrepareAvaliationProps) {
 
-    const [showTypeInterface, setShowTypeInterface] = useState("")
+    const [showTypeInterface, setShowTypeInterface] = useState<"create-quote" | "edit-quotes" | "">("")
     const [idCreditor, setIdCreditor] = useState(0)
     const [disableAllButtons, setDisableAllButtons] = useState(false)
-    const [creditorQuotes, setCreditorQuotes] = useState<ICreditorAvaliationQuestions[]>([])
-    const [positionsValue, setPositionsValue] = useState<number[]>([0, 0])
-    
-    function setValuePositions(value: number[]) {
-        setPositionsValue(value)
-    }
+    const [creditorQuotes, setCreditorQuotes] = useState<IQuotes[]>([])
 
-    function setValueCreditorQuotes(value: ICreditorAvaliationQuestions[]) {
+    function setValueCreditorQuotes(value: IQuotes[]) {
         setCreditorQuotes(value)
     }
 
@@ -26,7 +22,7 @@ export function ContainerPrepareTyperacer({ creditors }: IContainerPrepareAvalia
         setDisableAllButtons(value)
     }
 
-    function setValueShowTypeInterface(value: string) {
+    function setValueShowTypeInterface(value: "create-quote" | "edit-quotes" | "") {
         setShowTypeInterface(value)
     }
 
@@ -43,7 +39,6 @@ export function ContainerPrepareTyperacer({ creditors }: IContainerPrepareAvalia
                     setValueIdCreditor={setValueIdCreditor}
                     disableAllButtons={disableAllButtons}
                     setValueCreditorQuotes={setValueCreditorQuotes}
-                    setValuePositions={setValuePositions}
                 />
 
                 {showTypeInterface == "create-quote" && (
@@ -51,7 +46,11 @@ export function ContainerPrepareTyperacer({ creditors }: IContainerPrepareAvalia
                 )}
 
                 {showTypeInterface == "edit-quotes" && (
-                    <p>Editar frases de digitação do credor</p>
+                    <EditQuotesForm 
+                        creditorQuotes={creditorQuotes}
+                        disableAllButtons={disableAllButtons}
+                        setValueDisableAllButtons={setValueDisableAllButtons}
+                    />
                 )}
             </div>
 

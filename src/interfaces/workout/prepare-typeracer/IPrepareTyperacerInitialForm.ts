@@ -1,13 +1,12 @@
 import { ICreditorGetAllCreditors } from "@/interfaces/generics/GetAllCreditors";
-import { ICreditorAvaliationQuestions } from "../prepare-avaliation/IPrepareAvaliationInitialForm";
+import { IQuotes } from "./IEditQuotes";
 
 interface IPrepareTyperacerInitialFormProps {
     creditors: ICreditorGetAllCreditors[]
-    setValueShowTypeInterface: (value: string) => void
+    setValueShowTypeInterface: (value: "create-quote" | "edit-quotes" | "") => void
     setValueIdCreditor: (value: number) => void
     disableAllButtons: boolean
-    setValueCreditorQuotes: (value: ICreditorAvaliationQuestions[]) => void
-    setValuePositions: (value: number[]) => void
+    setValueCreditorQuotes: (value: IQuotes[]) => void
 }
 
 export type { IPrepareTyperacerInitialFormProps }

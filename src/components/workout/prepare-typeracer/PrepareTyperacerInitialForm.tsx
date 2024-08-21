@@ -1,7 +1,6 @@
 'use client'
 
 import { verifyUserToken } from "@/api/generics/verifyToken";
-import { getCreditorAvaliationQuestions } from "@/api/workout/prepare-avaliation/getCreditorAvaliationQuestions";
 import { getQuotesByIdCreditor } from "@/api/workout/prepare-typeracer/getQuotesByIdCreditor";
 import { Button } from "@/components/Button";
 import { FieldForm } from "@/components/FieldForm";
@@ -15,7 +14,7 @@ import { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-export function PrepareTyperacerInitialForm({ creditors, disableAllButtons, setValueCreditorQuotes, setValueIdCreditor, setValuePositions, setValueShowTypeInterface }: IPrepareTyperacerInitialFormProps) {
+export function PrepareTyperacerInitialForm({ creditors, disableAllButtons, setValueCreditorQuotes, setValueIdCreditor, setValueShowTypeInterface }: IPrepareTyperacerInitialFormProps) {
 
     const router = useRouter()
 
@@ -127,8 +126,8 @@ export function PrepareTyperacerInitialForm({ creditors, disableAllButtons, setV
                         register={register}
                     >
                         <Option value={"0"} firstValue={"Selecione"} />
-                        <Option value={"1"} firstValue={"Criar pergunta"} />
-                        <Option value={"2"} firstValue={"Organizar perguntas"} />
+                        <Option value={"1"} firstValue={"Criar frase"} />
+                        <Option value={"2"} firstValue={"Organizar frases"} />
                     </SelectField>
                 </FieldForm>
 

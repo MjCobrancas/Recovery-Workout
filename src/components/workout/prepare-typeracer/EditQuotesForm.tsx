@@ -1,108 +1,110 @@
 import { verifyUserToken } from "@/api/generics/verifyToken";
-import { updateAvaliationQuestions } from "@/api/workout/prepare-avaliation/updateAvaliationQuestions";
+import { updateQuotes } from "@/api/workout/prepare-typeracer/updateQuotes";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
-import { IAvaliationEditQuestionsFormProps } from "@/interfaces/workout/prepare-avaliation/IAvaliationEditQuestionsForm";
-import { ICreditorAvaliationQuestions, creditorAvaliationQuestionsSchema } from "@/interfaces/workout/prepare-avaliation/IPrepareAvaliationInitialForm";
+import { IEditQuotesProps, IEditQuotesSchema, IQuotes } from "@/interfaces/workout/prepare-typeracer/IEditQuotes";
 import { faArrowDown, faArrowUp, faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { FieldValues, useFieldArray, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-export function AvaliationEditQuestionsForm({ creditorQuestions, positionsValue, disableAllButtons, setValueDisableAllButtons }: IAvaliationEditQuestionsFormProps) {
+export function EditQuotesForm({ creditorQuotes, disableAllButtons, setValueDisableAllButtons }: IEditQuotesProps) {
 
     const router = useRouter()
 
-    const [lowestPosition, setLowestPosition] = useState(positionsValue[0])
-    const [highestPosition, setHighestPosition] = useState(positionsValue[1])
+    const lowestPosition = useRef(creditorQuotes.length > 0 ? creditorQuotes[0].Position : 0)
+    const highestPosition = useRef(creditorQuotes.length > 0 ? creditorQuotes[creditorQuotes.length - 1].Position : 0)
 
-    const { control, register, handleSubmit, watch, formState: { errors }, reset, getValues } = useForm<{ creditorAvaliationQuestions: ICreditorAvaliationQuestions[] }>({
+    const { control, register, handleSubmit, watch, formState: { errors }, reset, getValues } = useForm<{ creditorQuotesArray: IQuotes[] }>({
         defaultValues: {
-            creditorAvaliationQuestions: useMemo(() => {
-                return creditorQuestions.map((item) => {
+            creditorQuotesArray: useMemo(() => {
+                return creditorQuotes.map((item) => {
                     return {
-                        Id_Avaliation_Question: item.Id_Avaliation_Question,
-                        Question: item.Question,
-                        Question_Have_Image: item.Question_Have_Image,
-                        Id_Creditor: item.Id_Creditor,
+                        Id_Phrase: item.Id_Phrase,
+                        Phrase: item.Phrase,
+                        Phrase_Reference: item.Phrase_Reference,
                         Position: item.Position,
                         Status: item.Status
                     }
                 })
-            }, [creditorQuestions])
+            }, [creditorQuotes])
         },
-        resolver: zodResolver(creditorAvaliationQuestionsSchema)
+        resolver: zodResolver(IEditQuotesSchema)
     })
 
     const { fields, update } = useFieldArray({
         control,
-        name: "creditorAvaliationQuestions"
+        name: "creditorQuotesArray"
     })
 
     useEffect(() => {
-        const creditorQuestionsData: ICreditorAvaliationQuestions[] = []
-        if (creditorQuestions.length == 0) {
+        const creditorQuotesData: IQuotes[] = []
+        if (creditorQuotesData.length == 0) {
             return
         }
 
-        creditorQuestions.map((item) => {
-            creditorQuestionsData.push({
-                Id_Avaliation_Question: item.Id_Avaliation_Question,
-                Question: item.Question,
-                Question_Have_Image: item.Question_Have_Image,
-                Id_Creditor: item.Id_Creditor,
-                Position: item.Position,
-                Status: item.Status
+        creditorQuotesData.map((item) => {
+
+            const { Id_Phrase, Phrase, Phrase_Reference, Position, Status } = item
+
+            creditorQuotesData.push({
+                Id_Phrase,
+                Phrase,
+                Phrase_Reference,
+                Status,
+                Position
             })
         })
 
-        reset({ creditorAvaliationQuestions: creditorQuestionsData })
+        reset({ creditorQuotesArray: creditorQuotesData })
 
-    }, [creditorQuestions, reset])
+    }, [creditorQuotes, reset])
 
     function goPositionUp(position: number, index: number) {
-        if (position == lowestPosition) {
+        if (position == lowestPosition.current) {
             return
         }
-        
-        const objectUpdateDown = getValues(`creditorAvaliationQuestions.${index - 1}`)
-        const objectUpdateUp = getValues(`creditorAvaliationQuestions.${index}`)
+
+        const objectUpdateDown = getValues(`creditorQuotesArray.${index - 1}`)
+        const objectUpdateUp = getValues(`creditorQuotesArray.${index}`)
         objectUpdateUp.Position = objectUpdateDown.Position
         objectUpdateDown.Position = position
 
         update(index - 1, objectUpdateDown)
         update(index, objectUpdateUp)
 
-        reset({ creditorAvaliationQuestions: getValues(`creditorAvaliationQuestions`).sort((a, b) => a.Position - b.Position) })
+        reset({ creditorQuotesArray: getValues(`creditorQuotesArray`).sort((a, b) => a.Position - b.Position) })
     }
 
     function goPositionDown(position: number, index: number) {
-        if (position == highestPosition) {
+        if (position == highestPosition.current) {
             return
         }
 
-        const objectUpdateDown = getValues(`creditorAvaliationQuestions.${index}`)
-        const objectUpdateUp = getValues(`creditorAvaliationQuestions.${index + 1}`)
+        const objectUpdateDown = getValues(`creditorQuotesArray.${index}`)
+        const objectUpdateUp = getValues(`creditorQuotesArray.${index + 1}`)
         objectUpdateDown.Position = objectUpdateUp.Position
         objectUpdateUp.Position = position
 
         update(index, objectUpdateDown)
         update(index + 1, objectUpdateUp)
 
-        reset({ creditorAvaliationQuestions: getValues(`creditorAvaliationQuestions`).sort((a, b) => a.Position - b.Position) })
+        reset({ creditorQuotesArray: getValues(`creditorQuotesArray`).sort((a, b) => a.Position - b.Position) })
     }
 
-    function handleChangeQuestionStatus(status: boolean, index: number) {
+    function handleChangeQuoteStatus(status: boolean, index: number) {
         const object = fields[index]
         object.Status = !status
 
         update(index, object)
     }
 
-    async function handleUpdateQuestions(data: FieldValues) {
+    async function handleUpdateQuotes(data: FieldValues) {
+
+        setValueDisableAllButtons(true)
 
         const isValidToken = await verifyUserToken()
 
@@ -110,36 +112,35 @@ export function AvaliationEditQuestionsForm({ creditorQuestions, positionsValue,
             return router.push('/login')
         }
 
-        setValueDisableAllButtons(true)
-        const object = { questions: data.creditorAvaliationQuestions }
-
-        const updateAvalationQuestionResponse = await updateAvaliationQuestions<typeof object>(object)
+        const updateQuotesResponse = await updateQuotes<typeof data.creditorQuotesArray>(data.creditorQuotesArray)
 
         setValueDisableAllButtons(false)
 
-        if (!updateAvalationQuestionResponse.status) {
-            toast.error("Houve um erro na atualização das perguntas de avaliação do credor, revise os valores e tente novamente", {
+        if (!updateQuotesResponse.status) {
+            toast.error("Houve um erro na atualização das frases dos credores, revise os valores e tente novamente!", {
                 duration: 5000
             })
 
             return
         }
 
-        toast.success("Perguntas de avaliação do credor atualizadas com sucesso!", {
+        toast.success("Atualização de frases realizada com sucesso!", {
             duration: 5000
         })
-        
     }
 
     return (
         <>
-            {creditorQuestions.length > 0 ? (
-                <form className="flex flex-col gap-3 justify-center items-center px-10 w-[900px] border-t-[2px] border-gray-300 rounded" 
-                onSubmit={handleSubmit(handleUpdateQuestions)}>
+            {fields.length > 0 ? (
+                <form
+                    className="flex flex-col gap-3 justify-center items-center px-10 w-[900px] border-t-[2px] border-gray-300 rounded"
+                    onSubmit={handleSubmit(handleUpdateQuotes)}
+                >
                     <table className="w-full mt-10">
                         <thead className="w-full bg-gray-200 dark:bg-slate-600">
                             <tr>
-                                <th className="pl-6 text-left w-3/4 font-semibold p-2 dark:text-white/80 rounded-tl-md">Questão</th>
+                                <th className="pl-6 text-left w-1/3 font-semibold p-2 dark:text-white/80 rounded-tl-md">Frase</th>
+                                <th className="pl-6 text-left w-1/3 font-semibold p-2 dark:text-white/80">Referência</th>
                                 <th className="text-center font-semibold p-2 dark:text-white/80">Ações</th>
                                 <th className="text-center font-semibold p-2 dark:text-white/80 rounded-tr-md">Status</th>
                             </tr>
@@ -147,16 +148,32 @@ export function AvaliationEditQuestionsForm({ creditorQuestions, positionsValue,
                         <tbody>
                             {fields.map((item, index) => {
                                 return (
-                                    <tr key={item.id} className="h-fit odd:bg-gray-100 even:bg-gray-200 dark:odd:bg-slate-500 dark:even:bg-slate-600 transition">
+                                    <tr
+                                        key={item.id}
+                                        className="h-fit odd:bg-gray-100 even:bg-gray-200 dark:odd:bg-slate-500 dark:even:bg-slate-600 transition"
+                                    >
                                         <td className="h-fit p-2 text-center">
                                             <Input
-                                                id={`creditorAvaliationQuestions.${index}.Question`}
-                                                name={`creditorAvaliationQuestions.${index}.Question`}
+                                                id={`creditorQuotesArray.${index}.Phrase`}
+                                                name={`creditorQuotesArray.${index}.Phrase`}
                                                 type="input"
-                                                placeholder="Digite a questão"
-                                                value={watch(`creditorAvaliationQuestions.${index}.Question`)}
+                                                placeholder="Digite a frase"
+                                                value={watch(`creditorQuotesArray.${index}.Phrase`)}
                                                 disabled={disableAllButtons}
-                                                styles={errors.creditorAvaliationQuestions && errors.creditorAvaliationQuestions[index]?.Question ? "border-red-400" : ""}
+                                                styles={errors.creditorQuotesArray && errors.creditorQuotesArray[index]?.Phrase ? "border-red-400" : ""}
+                                                onForm={true}
+                                                register={register}
+                                            />
+                                        </td>
+                                        <td className="h-fit p-2 text-center">
+                                            <Input
+                                                id={`creditorQuotesArray.${index}.Phrase_Reference`}
+                                                name={`creditorQuotesArray.${index}.Phrase_Reference`}
+                                                type="input"
+                                                placeholder="Digite o contexto da frase"
+                                                value={watch(`creditorQuotesArray.${index}.Phrase_Reference`)}
+                                                disabled={disableAllButtons}
+                                                styles={errors.creditorQuotesArray && errors.creditorQuotesArray[index]?.Phrase_Reference ? "border-red-400" : ""}
                                                 onForm={true}
                                                 register={register}
                                             />
@@ -166,7 +183,7 @@ export function AvaliationEditQuestionsForm({ creditorQuestions, positionsValue,
                                                 type="button"
                                                 className="inline px-[9px] mr-[6px] py-1 duration-200 rounded-md cursor-pointer hover:text-white w-fit bg-green-400 hover:bg-green-500 disabled:bg-gray-400 disabled:hover:bg-gray-400 disabled:cursor-not-allowed disabled:hover:text-black"
                                                 onClick={() => goPositionUp(item.Position, index)}
-                                                disabled={item.Position == lowestPosition || disableAllButtons}
+                                                disabled={item.Position == lowestPosition.current || disableAllButtons}
                                             >
                                                 <FontAwesomeIcon icon={faArrowUp} />
                                             </button>
@@ -174,7 +191,7 @@ export function AvaliationEditQuestionsForm({ creditorQuestions, positionsValue,
                                                 type="button"
                                                 className="inline px-[9px] py-1 duration-200 rounded-md cursor-pointer hover:text-white w-fit bg-red-400 hover:bg-red-500 disabled:bg-gray-400 disabled:hover:bg-gray-400 disabled:cursor-not-allowed disabled:hover:text-black"
                                                 onClick={() => goPositionDown(item.Position, index)}
-                                                disabled={item.Position == highestPosition || disableAllButtons}
+                                                disabled={item.Position == highestPosition.current || disableAllButtons}
                                             >
                                                 <FontAwesomeIcon icon={faArrowDown} />
                                             </button>
@@ -182,8 +199,8 @@ export function AvaliationEditQuestionsForm({ creditorQuestions, positionsValue,
                                         <td className="p-2 text-center">
                                             <button
                                                 type="button"
-                                                onClick={() => handleChangeQuestionStatus(item.Status, index)}
-                                                className={` px-2 py-1 duration-200 rounded-md hover:text-white w-fit disabled:bg-gray-400 disabled:hover:bg-gray-400 disabled:cursor-not-allowed disabled:hover:text-black ${item.Status
+                                                onClick={() => handleChangeQuoteStatus(item.Status, index)}
+                                                className={` px-2 py-1 duration-300 rounded-md hover:text-white w-fit disabled:bg-gray-400 disabled:hover:bg-gray-400 disabled:cursor-not-allowed disabled:hover:text-black ${item.Status
                                                     ? ` bg-green-400 hover:bg-green-500`
                                                     : `bg-red-400 hover:bg-red-500 px-[9px]`
                                                     }`}
@@ -204,14 +221,15 @@ export function AvaliationEditQuestionsForm({ creditorQuestions, positionsValue,
 
                     <Button
                         type="submit"
-                        name="idQuestion"
+                        name="idQuotes"
                         text="Salvar Alterações"
                         styles={`w-30 h-11 mt-8 text-md self-end`}
                         disabled={disableAllButtons}
                     />
+
                 </form>
             ) : (
-                <div className="text-red-600">Este credor ainda não possui perguntas cadastradas.</div>
+                <p className="text-red-500 mt-6 font-bold">Não foi cadastrado frases neste credor</p>
             )}
         </>
     )
