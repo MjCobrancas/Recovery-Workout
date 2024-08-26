@@ -48,6 +48,8 @@ export function ContainerPrepareTyperacer({ creditors }: IContainerPrepareAvalia
 
                 {showTypeInterface == "edit-quotes" && (
                     <EditQuotesForm 
+                        idCreditor={idCreditor}
+                        creditors={creditors}
                         creditorQuotes={creditorQuotes}
                         disableAllButtons={disableAllButtons}
                         setValueDisableAllButtons={setValueDisableAllButtons}

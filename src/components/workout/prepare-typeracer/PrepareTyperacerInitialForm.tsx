@@ -66,6 +66,8 @@ export function PrepareTyperacerInitialForm({ creditors, disableAllButtons, setV
             return
         }
 
+        setValueIdCreditor(Number(data.idCreditor))
+
         setValueCreditorQuotes(creditorQuotes.data.length <= 0 ? [] : creditorQuotes.data)
         setValueShowTypeInterface("edit-quotes")
     }
