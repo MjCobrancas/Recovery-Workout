@@ -145,7 +145,7 @@ export function EditQuotesForm({ idCreditor, creditors, creditorQuotes, disableA
             <dialog
                 id="open-dialog"
                 ref={dialog}
-                className="fixed w-[80%] h-[80%] p-2 rounded-lg dark:bg-slate-700 max-sm:w-full"
+                className="fixed w-[80%] h-[80%] p-2 rounded-lg dark:bg-zinc-900 max-sm:w-full"
             >
                 <DialogCloneQuotesHeader
                     idCreditor={idCreditor}
@@ -168,7 +168,7 @@ export function EditQuotesForm({ idCreditor, creditors, creditorQuotes, disableA
                     >
                         <FontAwesomeIcon 
                             icon={faPlus} 
-                            className="px-2 py-2 bg-green-400 rounded-md text-white group-hover:bg-green-500 duration-300"
+                            className="px-2 py-2 bg-green-400 dark:bg-green-500 rounded-md text-white dark:group-hover:bg-green-600 group-hover:bg-green-500 duration-300"
                         />
                         Clonar frases para outro credor
                     </button>

@@ -172,19 +172,19 @@ export function DialogCloneQuotesForm({ cloneIdCreditor, creditorQuotes, credito
             <div
                 className="w-full h-full flex justify-center items-start mt-5 mb-16"
             >
-                <div className="relative w-1/2 h-full border-r-[2px] border-gray-100 overflow-y-auto">
+                <div className="relative w-1/2 h-full border-r-[2px] border-gray-100 dark:border-zinc-900 overflow-y-auto">
                     {fieldsCreditorClone.map((item, index) => {
                         return (
                             <div
                                 key={item.id}
                                 id={`id${item.id}`}
-                                className={`flex items-center w-full rounded-md odd:bg-slate-200 even:bg-slate-300 p-4 dark:odd:bg-slate-500 dark:even:bg-slate-600 dark:text-white relative mb-1 pr-24`}
+                                className={`flex items-center w-full rounded-md odd:bg-slate-200 even:bg-slate-300 p-4 dark:odd:bg-zinc-700 dark:even:bg-zinc-800 dark:text-white relative mb-1 pr-24`}
                             >
                                 {item.Phrase}
 
                                 <button
                                     type="button"
-                                    className="absolute bottom-1 right-[66px] bg-emerald-400 hover:bg-emerald-500 text-white rounded-md px-2 py-1 disabled:bg-gray-400 disabled:cursor-not-allowed transition"
+                                    className="absolute bottom-1 right-[66px] bg-emerald-400 dark:bg-emerald-500 hover:bg-emerald-500 dark:hover:bg-emerald-600 text-white rounded-md px-2 py-1 disabled:bg-gray-400 dark:disabled:bg-gray-500 disabled:cursor-not-allowed transition"
                                     disabled={index == lowestIndex.current || disableAllButtons}
                                     onClick={() => positionGoUp(index, item.Position)}
                                 >
@@ -193,7 +193,7 @@ export function DialogCloneQuotesForm({ cloneIdCreditor, creditorQuotes, credito
 
                                 <button
                                     type="button"
-                                    className="absolute bottom-1 right-9 bg-red-400 hover:bg-red-500 text-white rounded-md px-2 py-1 disabled:bg-gray-400 disabled:cursor-not-allowed transition"
+                                    className="absolute bottom-1 right-9 bg-red-400 dark:bg-red-500 hover:bg-red-500 dark:hover:bg-red-600 text-white rounded-md px-2 py-1 disabled:bg-gray-400 dark:disabled:bg-gray-500 disabled:cursor-not-allowed transition"
                                     disabled={index == highestIndex || disableAllButtons}
                                     onClick={() => positionGoDown(index, item.Position)}
                                 >
@@ -204,7 +204,7 @@ export function DialogCloneQuotesForm({ cloneIdCreditor, creditorQuotes, credito
                                     <>
                                         <button
                                             type="button"
-                                            className="absolute bottom-1 right-1 bg-blue-400 hover:bg-blue-500 text-white rounded-md px-2 py-1 disabled:bg-gray-400 disabled:cursor-not-allowed transition"
+                                            className="absolute bottom-1 right-1 bg-blue-400 dark:bg-blue-500 hover:bg-blue-500 dark:hover:bg-blue-600 text-white rounded-md px-2 py-1 disabled:bg-gray-400 dark:disabled:bg-gray-500 disabled:cursor-not-allowed transition"
                                             onClick={() => moveToQuotes(index)}
                                             disabled={disableAllButtons || disableAllButtons}
                                         >
@@ -215,7 +215,7 @@ export function DialogCloneQuotesForm({ cloneIdCreditor, creditorQuotes, credito
                                     <>
                                         <button
                                             type="button"
-                                            className="absolute bottom-1 right-1 bg-blue-400 hover:bg-blue-500 text-white rounded-md px-2 py-1 disabled:bg-gray-400 disabled:cursor-not-allowed transition"
+                                            className="absolute bottom-1 right-1 bg-blue-400 dark:bg-blue-500 hover:bg-blue-500 dark:hover:bg-blue-600 text-white rounded-md px-2 py-1 disabled:bg-gray-400 dark:disabled:bg-gray-500 disabled:cursor-not-allowed transition"
                                             disabled={true}
                                         >
                                             <FontAwesomeIcon icon={faArrowRight} />
@@ -235,13 +235,13 @@ export function DialogCloneQuotesForm({ cloneIdCreditor, creditorQuotes, credito
                             <div
                                 key={item.id}
                                 id={`id${item.id}`}
-                                className={`flex items-center w-full rounded-md odd:bg-slate-200 even:bg-slate-300 p-4 dark:odd:bg-slate-500 dark:even:bg-slate-600 dark:text-white relative mb-1 pr-12`}
+                                className={`flex items-center w-full rounded-md odd:bg-slate-200 even:bg-slate-300 p-4 dark:odd:bg-zinc-800 dark:even:bg-zinc-700 dark:text-white relative mb-1 pr-12`}
 
                             >
                                 {item.Phrase}
                                 <button
                                     type="button"
-                                    className="absolute bottom-1 right-1 bg-blue-400 hover:bg-blue-500 text-white rounded-md px-2 py-1 disabled:bg-gray-400 disabled:cursor-not-allowed transition"
+                                    className="absolute bottom-1 right-1 bg-blue-400 dark:bg-blue-500 hover:bg-blue-500 dark:hover:bg-blue-600 text-white rounded-md px-2 py-1 disabled:bg-gray-400 disabled:dark:bg-gray-500 disabled:cursor-not-allowed transition"
                                     onClick={() => moveToCloneQuotes(index)}
                                     disabled={disableAllButtons}
                                 >

@@ -29,7 +29,7 @@ const StatsDisplay: FC<StatsDisplayProps> = ({
             <p className="text-xl font-bold font-sans dark:text-white">
                 Você acabou de digitar uma frase sobre {quote.Phrase_Reference}
             </p>
-            <p className="mt-2 dark:text-white">Suas estatisticas</p>
+            <p className="mt-2 dark:text-white">Suas estatísticas</p>
             <ul className="dark:text-white">
                 <li>Palavras Por Minuto: {wpm}</li>
                 <li>Palavras Por Segundo: {wps.toFixed(2)}</li>
