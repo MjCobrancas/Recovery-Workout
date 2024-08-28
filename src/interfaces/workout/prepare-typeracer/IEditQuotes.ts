@@ -1,3 +1,4 @@
+import { ICreditorGetAllCreditors } from "@/interfaces/generics/GetAllCreditors"
 import { z } from "zod"
 
 interface IQuotes {
@@ -9,6 +10,8 @@ interface IQuotes {
 }
 
 interface IEditQuotesProps {
+    idCreditor: number
+    creditors: ICreditorGetAllCreditors[]
     creditorQuotes: IQuotes[]
     disableAllButtons: boolean
     setValueDisableAllButtons: (value: boolean) => void

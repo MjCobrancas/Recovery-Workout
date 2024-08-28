@@ -3,20 +3,23 @@ import { updateQuotes } from "@/api/workout/prepare-typeracer/updateQuotes";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { IEditQuotesProps, IEditQuotesSchema, IQuotes } from "@/interfaces/workout/prepare-typeracer/IEditQuotes";
-import { faArrowDown, faArrowUp, faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faArrowDown, faArrowUp, faCheck, faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { FieldValues, useFieldArray, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import { DialogCloneQuotesHeader } from "./dialog-clone-quotes/DialogCloneQuotesHeader";
 
-export function EditQuotesForm({ creditorQuotes, disableAllButtons, setValueDisableAllButtons }: IEditQuotesProps) {
+export function EditQuotesForm({ idCreditor, creditors, creditorQuotes, disableAllButtons, setValueDisableAllButtons }: IEditQuotesProps) {
 
     const router = useRouter()
 
     const lowestPosition = useRef(creditorQuotes.length > 0 ? creditorQuotes[0].Position : 0)
     const highestPosition = useRef(creditorQuotes.length > 0 ? creditorQuotes[creditorQuotes.length - 1].Position : 0)
+
+    const dialog = useRef<HTMLDialogElement>(null)
 
     const { control, register, handleSubmit, watch, formState: { errors }, reset, getValues } = useForm<{ creditorQuotesArray: IQuotes[] }>({
         defaultValues: {
@@ -129,13 +132,46 @@ export function EditQuotesForm({ creditorQuotes, disableAllButtons, setValueDisa
         })
     }
 
+    function openDialog() {
+        dialog.current?.showModal()
+    }
+
+    function closeDialog() {
+        dialog.current?.close()
+    }
+
     return (
         <>
+            <dialog
+                id="open-dialog"
+                ref={dialog}
+                className="fixed w-[80%] h-[80%] p-2 rounded-lg dark:bg-slate-700 max-sm:w-full"
+            >
+                <DialogCloneQuotesHeader
+                    idCreditor={idCreditor}
+                    creditors={creditors}
+                    creditorQuotes={creditorQuotes.filter((item) => item.Status == true)}
+                    disableAllButtons={disableAllButtons}
+                    setDisableAllButtons={setValueDisableAllButtons}
+                    closeDialog={closeDialog}
+                />
+            </dialog>
             {fields.length > 0 ? (
                 <form
-                    className="flex flex-col gap-3 justify-center items-center px-10 w-[900px] border-t-[2px] border-gray-300 rounded"
+                    className="flex flex-col gap-3 justify-center items-center px-10 w-[900px] border-gray-300 rounded"
                     onSubmit={handleSubmit(handleUpdateQuotes)}
                 >
+                    <button 
+                        type="button"
+                        className="self-start mt-5 flex justify-center items-center gap-3 group"
+                        onClick={openDialog}
+                    >
+                        <FontAwesomeIcon 
+                            icon={faPlus} 
+                            className="px-2 py-2 bg-green-400 rounded-md text-white group-hover:bg-green-500 duration-300"
+                        />
+                        Clonar frases para outro credor
+                    </button>
                     <table className="w-full mt-10">
                         <thead className="w-full bg-gray-200 dark:bg-zinc-800">
                             <tr>
