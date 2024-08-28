@@ -63,7 +63,7 @@ export function ContainerAvaliationRealized({ avaliations, creditors, operators 
         <>
             <dialog
                 id="realized-dialog"
-                className={`w-5/6 max-lg:w-3/4 p-2 rounded-lg dark:bg-slate-600 max-sm:w-full`}
+                className={`w-5/6 max-lg:w-3/4 p-2 rounded-lg dark:bg-zinc-900 max-sm:w-full`}
                 ref={dialogRef}
             >
                 <AvaliationDialog 
@@ -79,7 +79,7 @@ export function ContainerAvaliationRealized({ avaliations, creditors, operators 
                 setValueAvaliationList={setValueAvaliationList}
             />
             <table className="w-[96vw] px-4 mx-auto my-4">
-                <thead className="bg-gray-200 dark:bg-slate-600">
+                <thead className="bg-gray-200 dark:bg-zinc-800">
                     <tr>
                         <th className="font-semibold p-2 dark:text-white/80 rounded-tl-md">Operador</th>
                         <th className="font-semibold p-2 dark:text-white/80">Credor</th>
@@ -91,14 +91,14 @@ export function ContainerAvaliationRealized({ avaliations, creditors, operators 
                     {avaliationsList.length > 0 ? (
                         avaliationsList.map((item, index) => {
                             return (
-                                <tr key={index} className="odd:bg-gray-100 even:bg-gray-200 dark:odd:bg-slate-500 dark:even:bg-slate-600">
+                                <tr key={index} className="odd:bg-gray-100 even:bg-gray-200 dark:odd:bg-zinc-700 dark:even:bg-zinc-800">
                                     <td className="px-6 py-2 text-center font-medium dark:text-slate-50">{item.Name} {item.Last_Name}</td>
                                     <td className="px-6 py-2 text-center font-medium dark:text-slate-50">{item.Creditor}</td>
                                     <td className="px-6 py-2 text-center font-medium dark:text-slate-50">{item.Created_At_Formatted}</td>
                                     <td className="px-6 py-2 text-center font-medium dark:text-slate-50">
                                         <button
                                             type="button"
-                                            className="bg-blue-400 hover:bg-blue-500 duration-100 text-white rounded-md px-2 py-[5px]"
+                                            className="bg-blue-400 dark:bg-blue-500 hover:bg-blue-500 dark:hover:bg-blue-600 duration-100 text-white rounded-md px-2 py-[5px]"
                                             name="idForm"
                                             onClick={() => handleGetOperatorAvaliation(item.Id_Form)}
                                         >

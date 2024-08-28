@@ -43,10 +43,6 @@ export function TyperacerCreatePhrase({ idCreditor, disableAllButtons, setValueD
 
         const responseCreatePhrase = await createQuote<typeof object>(object)
 
-        console.log(object)
-
-        console.log(responseCreatePhrase)
-
         setValueDisableAllButtons(false)
 
         if (!responseCreatePhrase.status) {

@@ -137,7 +137,7 @@ export function EditQuotesForm({ creditorQuotes, disableAllButtons, setValueDisa
                     onSubmit={handleSubmit(handleUpdateQuotes)}
                 >
                     <table className="w-full mt-10">
-                        <thead className="w-full bg-gray-200 dark:bg-slate-600">
+                        <thead className="w-full bg-gray-200 dark:bg-zinc-800">
                             <tr>
                                 <th className="pl-6 text-left w-1/3 font-semibold p-2 dark:text-white/80 rounded-tl-md">Frase</th>
                                 <th className="pl-6 text-left w-1/3 font-semibold p-2 dark:text-white/80">Referência</th>
@@ -150,7 +150,7 @@ export function EditQuotesForm({ creditorQuotes, disableAllButtons, setValueDisa
                                 return (
                                     <tr
                                         key={item.id}
-                                        className="h-fit odd:bg-gray-100 even:bg-gray-200 dark:odd:bg-slate-500 dark:even:bg-slate-600 transition"
+                                        className="h-fit odd:bg-gray-100 even:bg-gray-200 dark:odd:bg-zinc-700 dark:even:bg-zinc-800 transition"
                                     >
                                         <td className="h-fit p-2 text-center">
                                             <Input
@@ -181,7 +181,7 @@ export function EditQuotesForm({ creditorQuotes, disableAllButtons, setValueDisa
                                         <td className="p-2 h-5 text-center">
                                             <button
                                                 type="button"
-                                                className="inline px-[9px] mr-[6px] py-1 duration-200 rounded-md cursor-pointer hover:text-white w-fit bg-green-400 hover:bg-green-500 disabled:bg-gray-400 disabled:hover:bg-gray-400 disabled:cursor-not-allowed disabled:hover:text-black"
+                                                className="inline px-[9px] mr-[6px] py-1 duration-200 rounded-md cursor-pointer hover:text-white w-fit bg-green-400 dark:bg-green-500 hover:bg-green-500 dark:hover:bg-green-600 disabled:bg-gray-400 dark:disabled:bg-gray-500 disabled:hover:bg-gray-400 disabled:cursor-not-allowed disabled:hover:text-black"
                                                 onClick={() => goPositionUp(item.Position, index)}
                                                 disabled={item.Position == lowestPosition.current || disableAllButtons}
                                             >
@@ -189,7 +189,7 @@ export function EditQuotesForm({ creditorQuotes, disableAllButtons, setValueDisa
                                             </button>
                                             <button
                                                 type="button"
-                                                className="inline px-[9px] py-1 duration-200 rounded-md cursor-pointer hover:text-white w-fit bg-red-400 hover:bg-red-500 disabled:bg-gray-400 disabled:hover:bg-gray-400 disabled:cursor-not-allowed disabled:hover:text-black"
+                                                className="inline px-[9px] py-1 duration-200 rounded-md cursor-pointer hover:text-white w-fit bg-red-400 dark:bg-red-500 hover:bg-red-500 dark:hover:bg-red-600 disabled:bg-gray-400 disabled:hover:bg-gray-400 dark:disabled:bg-gray-500 disabled:cursor-not-allowed disabled:hover:text-black"
                                                 onClick={() => goPositionDown(item.Position, index)}
                                                 disabled={item.Position == highestPosition.current || disableAllButtons}
                                             >
@@ -201,8 +201,8 @@ export function EditQuotesForm({ creditorQuotes, disableAllButtons, setValueDisa
                                                 type="button"
                                                 onClick={() => handleChangeQuoteStatus(item.Status, index)}
                                                 className={` px-2 py-1 duration-300 rounded-md hover:text-white w-fit disabled:bg-gray-400 disabled:hover:bg-gray-400 disabled:cursor-not-allowed disabled:hover:text-black ${item.Status
-                                                    ? ` bg-green-400 hover:bg-green-500`
-                                                    : `bg-red-400 hover:bg-red-500 px-[9px]`
+                                                    ? ` bg-green-400 dark:bg-green-500 hover:bg-green-500 dark:hover:bg-green-600`
+                                                    : `bg-red-400 dark:bg-red-500 hover:bg-red-500 dark:hover:bg-red-600 px-[9px]`
                                                     }`}
                                                 disabled={disableAllButtons}
                                             >

@@ -26,11 +26,11 @@ const StatsDisplay: FC<StatsDisplayProps> = ({
 
     return (
         <div className="w-fit h-fit border rounded-xl p-4 my-2">
-            <p className="text-xl font-bold font-sans">
+            <p className="text-xl font-bold font-sans dark:text-white">
                 Você acabou de digitar uma frase sobre {quote.Phrase_Reference}
             </p>
-            <p className="mt-2">Suas estatisticas</p>
-            <ul>
+            <p className="mt-2 dark:text-white">Suas estatisticas</p>
+            <ul className="dark:text-white">
                 <li>Palavras Por Minuto: {wpm}</li>
                 <li>Palavras Por Segundo: {wps.toFixed(2)}</li>
                 <li>Caracteres Por Minuto: {cpm.toFixed(0)}</li>
@@ -38,7 +38,7 @@ const StatsDisplay: FC<StatsDisplayProps> = ({
             <button
                 onClick={onClickNextQuote}
                 id="nextQuote"
-                className="px-4 py-2 border rounded-xl bg-blue-500 text-white mt-4 hover:bg-white-500"
+                className="px-4 py-2 border rounded-xl bg-blue-500 text-white mt-4 hover:bg-white-500 dark:border-slate-700"
             >
                 Próxima Frase
             </button>

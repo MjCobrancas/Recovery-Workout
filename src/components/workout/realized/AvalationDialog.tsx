@@ -22,7 +22,7 @@ export function AvaliationDialog({ avaliationOperator, closeDialog, isLoadingDia
                                     className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
                                 >
                                     <thead
-                                        className="text-sm text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400"
+                                        className="text-sm text-gray-700 uppercase bg-gray-200 dark:bg-zinc-800 dark:text-gray-400"
                                     >
                                         <tr>
                                             <th scope="col" className="px-6 py-3">Operador</th>
@@ -32,7 +32,7 @@ export function AvaliationDialog({ avaliationOperator, closeDialog, isLoadingDia
                                     </thead>
                                     <tbody>
                                         <tr
-                                            className="bg-slate-100 border-b dark:bg-gray-800 dark:border-gray-700"
+                                            className="bg-slate-100 border-b dark:bg-zinc-700 dark:border-zinc-900"
                                         >
                                             <td className="px-6 py-4 text-base font-semibold dark:text-slate-50">
                                                 {avaliationOperator.avaliationHeader[0].Name} {avaliationOperator.avaliationHeader[0].Last_Name}
@@ -47,7 +47,7 @@ export function AvaliationDialog({ avaliationOperator, closeDialog, isLoadingDia
                                     </tbody>
                                 </table>
                                 <div className="flex flex-col gap-8 p-2">
-                                    <h3 className="w-full text-3xl text-center mt-10 font-normal">
+                                    <h3 className="w-full text-3xl text-center mt-10 font-normal dark:text-white">
                                         Questões do credor da
                                         <span className="ml-2 font-medium">{avaliationOperator.avaliationHeader[0].Creditor}</span>
                                     </h3>
@@ -86,7 +86,7 @@ export function AvaliationDialog({ avaliationOperator, closeDialog, isLoadingDia
                     )}
                 </>
             ) : (
-                <p className="text-left font-bold">Carregando...</p>
+                <p className="text-left font-bold dark:text-white">Carregando...</p>
             )}
         </>
     )

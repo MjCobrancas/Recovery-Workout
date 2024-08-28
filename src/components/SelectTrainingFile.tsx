@@ -66,7 +66,7 @@ export function SelectTrainingFile({ quotes, typeFile, fileUrl, YoutubeExternalV
             }
 
             {typeFile == "loading" &&
-                <div className={`p-2`}>
+                <div className={`p-2 dark:text-white`}>
                     Carregando...
                 </div>
             }
@@ -77,10 +77,10 @@ export function SelectTrainingFile({ quotes, typeFile, fileUrl, YoutubeExternalV
 
             {typeFile == "voice" &&
                 <div className="h-full py-8">
-                    <h2 className="px-8 text-2xl text-center font-bold">Ouça sua própria voz para fazer uma auto análise sobre o que você pode melhorar durante a ligação</h2>
+                    <h2 className="px-8 text-2xl text-center font-bold dark:text-white">Ouça sua própria voz para fazer uma auto análise sobre o que você pode melhorar durante a ligação</h2>
 
                     <div className="h-full flex flex-col justify-center items-center gap-2">
-                        <p className="flex justify-center items-center gap-5">
+                        <p className="flex justify-center items-center gap-5 dark:text-white">
                             Clique no botão abaixo para iniciar a gravação
                             <FontAwesomeIcon icon={faArrowDown} />
                         </p>
@@ -88,7 +88,7 @@ export function SelectTrainingFile({ quotes, typeFile, fileUrl, YoutubeExternalV
                             onRecordingComplete={(blob) => handleAddAudioRecord(blob)}
                             recorderControls={recorderControls}
                         />
-                        <p className="mt-8">Resultado da gravação:</p>
+                        <p className="mt-8 dark:text-white">Resultado da gravação:</p>
                         <audio ref={audioRef} controls={true} />
                     </div>
                 </div>
@@ -96,7 +96,7 @@ export function SelectTrainingFile({ quotes, typeFile, fileUrl, YoutubeExternalV
 
             {typeFile == "keyboard" &&
                 <div className="h-full py-8">
-                    <h2 className="px-8 text-2xl text-center font-bold mb-2">
+                    <h2 className="px-8 text-2xl text-center font-bold mb-2 dark:text-white">
                         Clique em iniciar para começar o exercício
                     </h2>
 

@@ -102,14 +102,14 @@ export default function ContainerInstructions({ workoutFiles, initialGlobalFiles
                     }) : <p>Houve um problema para carregar os arquivos do treinamento</p>}
 
                     {workoutFiles![4].creditorFiles.length > 0 || workoutFiles![4].operatorFiles.length > 0 || workoutFiles![4].globalFiles.length > 0 ? (
-                        <div className={`mt-[-1px] font-bold text-[--bg-login] border-solid border-[1px] border-blue-500 rounded-md dark:text-[--text-input-dark] ${workoutFiles![4].creditorFiles.length > 0 || workoutFiles![4].operatorFiles.length > 0 || workoutFiles![4].globalFiles.length > 0 ? "cursor-pointer hover:bg-[--hover-light-route] dark:hover:bg-[--hover-dark-route]" : "bg-slate-100 dark:bg-slate-600 dark:border-slate-500 cursor-not-allowed"}`}>
+                        <div className={`mt-[-1px] font-bold text-[--bg-login] border-solid border-[1px] border-blue-500 rounded-md dark:text-[--text-input-dark] ${workoutFiles![4].creditorFiles.length > 0 || workoutFiles![4].operatorFiles.length > 0 || workoutFiles![4].globalFiles.length > 0 ? "cursor-pointer hover:bg-[--hover-light-route] dark:hover:bg-zinc-700" : "bg-slate-100 dark:bg-slate-600 dark:border-slate-500 cursor-not-allowed"}`}>
                             <AvaliationButton
                                 changeTypeFileToAvaliation={changeTypeFileToAvaliation}
                                 changeTypeFile={changeTypeFile}
                             />
                         </div>
                     ) : (
-                        <div className={`mt-[-1px] font-bold text-[--bg-login] border-solid border-[1px] border-blue-500 rounded-md dark:text-[--text-input-dark] bg-slate-200 dark:bg-slate-600 dark:border-slate-500 cursor-not-allowed"}`}>
+                        <div className={`mt-[-1px] font-bold text-[--bg-login] border-solid border-[1px] border-blue-500 rounded-md dark:text-[--text-input-dark] bg-slate-200 dark:bg-zinc-800/50 cursor-not-allowed"}`}>
                             <div
                                 className={`h-full flex items-center`}
                             >
@@ -127,7 +127,7 @@ export default function ContainerInstructions({ workoutFiles, initialGlobalFiles
                         </div>
                     )}
 
-                    <div className={`mt-[-1px] font-bold text-[--bg-login] border-solid border-[1px] border-blue-500 rounded-md dark:text-[--text-input-dark]`}>
+                    <div className={`mt-[-1px] font-bold text-[--bg-login] border-solid border-[1px] border-blue-500 rounded-md dark:text-[--text-input-dark] dark:hover:bg-zinc-700 hover:bg-[--hover-light-route]`}>
                         <div
                             className={`h-full flex items-center`}
                         >
@@ -145,7 +145,7 @@ export default function ContainerInstructions({ workoutFiles, initialGlobalFiles
                         </div>
                     </div>
 
-                    <div className={`mt-[-1px] font-bold text-[--bg-login] border-solid border-[1px] border-blue-500 rounded-md dark:text-[--text-input-dark]`}>
+                    <div className={`mt-[-1px] font-bold text-[--bg-login] border-solid border-[1px] border-blue-500 rounded-md dark:text-[--text-input-dark] dark:hover:bg-zinc-700 hover:bg-[--hover-light-route]`}>
                         <div
                             className={`h-full flex items-center`}
                         >

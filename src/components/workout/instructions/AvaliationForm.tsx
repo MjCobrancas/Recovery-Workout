@@ -69,7 +69,7 @@ export function AvaliationForm({ creditor, questions }: IAvaliationFormProps) {
     }
 
     return (
-        <form 
+        <form
             className="w-full h-full overflow-y-scroll"
             onSubmit={handleSubmit(handleSubmitAnswers)}
         >
@@ -104,15 +104,20 @@ export function AvaliationForm({ creditor, questions }: IAvaliationFormProps) {
                 )
             })}
 
-            <div className={`flex flex-1 justify-end items-center`}>
-                <Button
-                    type="submit"
-                    text="Enviar Respostas"
-                    name="createAvaliationQuestions"
-                    styles={`w-fit text-xl p-2 mt-10 mr-2 mb-2`}
-                    disabled={disableSubmitButton}
-                />
-            </div>
+            {questions.length > 0 ?
+                <div className={`flex flex-1 justify-end items-center`}>
+                    <Button
+                        type="submit"
+                        text="Enviar Respostas"
+                        name="createAvaliationQuestions"
+                        styles={`w-fit text-xl p-2 mt-10 mr-2 mb-2`}
+                        disabled={disableSubmitButton}
+                    />
+                </div>
+                :
+                <p className={"flex h-full font-bold text-red-500 items-center justify-center"}>Não há uma avaliação cadastrada nesse credor.</p>
+            }
+
         </form>
     )
 }

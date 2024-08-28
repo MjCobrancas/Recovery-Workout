@@ -33,7 +33,7 @@ export function WorkoutDialogQuitter({ quitterUsers }: IWorkoutDialogQuitter) {
             <dialog
                 ref={dialog}
                 id={`w-11/12 max-lg:w-3/4 p-2 rounded-lg dark:bg-slate-600 max-sm:w-full`}
-                className={`w-11/12 max-lg:w-3/4 p-2 rounded-lg dark:bg-slate-600 max-sm:w-full`}
+                className={`w-11/12 max-lg:w-3/4 p-2 rounded-lg dark:bg-zinc-900 max-sm:w-full`}
             >
                 <section>
                     <h1 className={`black/80 dark:text-white text-lg font-medium text-center my-4 md:text-lg`}>
@@ -43,7 +43,7 @@ export function WorkoutDialogQuitter({ quitterUsers }: IWorkoutDialogQuitter) {
 
                 <section className={`m-6`}>
                     <table className={`w-full table-auto`}>
-                        <thead className={`bg-slate-200 dark:bg-slate-500 text-sm`}>
+                        <thead className={`bg-slate-200 dark:bg-zinc-800 text-sm`}>
                             <tr>
 
                                 <th className={`font-semibold p-2 dark:text-white/80 rounded-tl-md`}>
@@ -60,20 +60,20 @@ export function WorkoutDialogQuitter({ quitterUsers }: IWorkoutDialogQuitter) {
 
                             </tr>
                         </thead>
-                        <tbody className={`items-center p-1 odd:bg-gray-100 even:bg-gray-200 dark:odd:bg-slate-500 dark:even:bg-slate-600`}>
+                        <tbody className={`items-center p-1 odd:bg-gray-100 even:bg-gray-200 dark:odd:bg-zinc-700 dark:even:bg-zinc-800`}>
                             { quitterUsers!.length > 0 && quitterUsers!.map((item, i) => {
                                 return (
-                                    <tr key={i} className={`odd:bg-gray-100 even:bg-gray-100 dark:odd:bg-slate-500 dark:even:bg-slate-600`}>
+                                    <tr key={i} className={`odd:bg-gray-100 even:bg-gray-100 dark:odd:bg-zinc-700/30 dark:even:bg-zinc-800`}>
 
-                                        <td className={`p-2 text-center`}>
+                                        <td className={`p-2 text-center dark:text-white/80`}>
                                             {item.Negotiator + " " + item.Negotiator_Last_Name}
                                         </td>
 
-                                        <td className={`p-2 text-center`}>
+                                        <td className={`p-2 text-center dark:text-white/80`}>
                                             {item.Responsable + " " + item.Responsable_Last_Name}
                                         </td>
 
-                                        <td className={`p-2 text-center`}>
+                                        <td className={`p-2 text-center dark:text-white/80`}>
                                             {item.Dimissal_At_Formatted}
                                         </td>
 
@@ -83,7 +83,7 @@ export function WorkoutDialogQuitter({ quitterUsers }: IWorkoutDialogQuitter) {
                         </tbody>
                     </table>
                     {quitterUsers!.length <= 0 && (
-                        <p className="text-base font-bold">Não há desistências de operadores este mês!</p>
+                        <p className="text-base font-bold dark:text-white">Não há desistências de operadores este mês!</p>
                     )}
                 </section>
 

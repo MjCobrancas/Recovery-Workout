@@ -122,11 +122,11 @@ export function Typeracer({ quotesData }: IQuotesData) {
                                 <span className="text-green-600 text-center">{alreadyTypedWords} </span>
                                 <span className="text-green-600 text-center">{correctGreenWord}</span>
                                 <span className="text-red-700 bg-red-200 text-center">{wrongRedWord}</span>
-                                <span className="underline text-center">{currentWord?.slice(text.length)}</span>
-                                <span className="text-black text-center"> {wordsToBeTyped}</span>
+                                <span className="underline text-center dark:text-slate-400">{currentWord?.slice(text.length)}</span>
+                                <span className="text-black text-center dark:text-white"> {wordsToBeTyped}</span>
                             </p>
                             <input
-                                className="w-full border-black border px-4 py-2"
+                                className="w-full border-black dark:border-white border rounded-md px-4 py-2"
                                 onChange={(text) => setText(text.target.value)}
                                 value={text}
                                 disabled={gameState == GameState.VIEW_STATS}

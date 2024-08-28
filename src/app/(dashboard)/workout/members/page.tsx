@@ -40,21 +40,21 @@ export default async function workoutMembers() {
 
                     <Link
                         href="/workout/operator-content"
-                        className={`bg-blue-400 rounded-md p-2 font-semibold text-black/80 text-white`}
+                        className={`bg-blue-400 dark:bg-blue-500 hover:bg-blue-500 dark:hover:bg-blue-600 rounded-md p-2 font-semibold text-black/80 text-white`}
                     >
                         Enviar conteúdos de operador
                     </Link>
 
                     <Link
                         href="/workout/creditor-content"
-                        className={`bg-blue-400 rounded-md p-2 font-semibold text-black/80 text-white`}
+                        className={`bg-blue-400 dark:bg-blue-500 hover:bg-blue-500 dark:hover:bg-blue-600 rounded-md p-2 font-semibold text-black/80 text-white`}
                     >
                         Enviar conteúdos de credor
                     </Link>
 
                     <Link
                         href="/workout/global-content"
-                        className={`bg-blue-400 rounded-md p-2 font-semibold text-black/80 text-white`}
+                        className={`bg-blue-400 dark:bg-blue-500 hover:bg-blue-500 dark:hover:bg-blue-600 rounded-md p-2 font-semibold text-black/80 text-white`}
                     >
                         Enviar conteúdo global
                     </Link>
@@ -85,7 +85,7 @@ export default async function workoutMembers() {
             </div>
 
             <table className={`w-[96vw] px-4 mx-auto my-4`}>
-                <thead className={`bg-gray-200 dark:bg-slate-600`}>
+                <thead className={`bg-gray-200 dark:bg-zinc-800`}>
                     <tr>
                         <th className="font-semibold p-2 dark:text-white/80 rounded-tl-md"
                         >Data de Início
@@ -112,7 +112,7 @@ export default async function workoutMembers() {
                         return (
                             <tr
                                 key={item.Id_User}
-                                className={`odd:bg-gray-100 even:bg-gray-200 dark:odd:bg-slate-500 dark:even:bg-slate-600`}
+                                className={`odd:bg-gray-100 even:bg-gray-200 dark:odd:bg-zinc-700 dark:even:bg-zinc-800`}
                             >
                                 <td className="p-2 text-center"
                                 >{item.Created_At_Formatted}</td>
@@ -128,7 +128,7 @@ export default async function workoutMembers() {
 
                                 <td className="p-2 text-center">
                                     <Link
-                                        className={`bg-blue-400 hover:bg-blue-500 duration-100 text-white rounded-md px-2 py-[5px]
+                                        className={`bg-blue-400 dark:bg-blue-500 hover:bg-blue-500 dark:hover:bg-blue-600 duration-100 text-white rounded-md px-2 py-[5px]
                                         `}
                                         href={`/workout/change-phase/${item.Id_Workout}`}
                                     >

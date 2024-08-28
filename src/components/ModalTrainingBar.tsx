@@ -50,7 +50,7 @@ export function ModalTrainingBar({ initialGlobalFiles, globalFiles, creditorFile
                         <details
                             className={`relative before:duration-200 open:before:rotate-[225deg]
                         before:absolute before:w-2 before:h-2 before:top-[10px] before:right-0 before:mt-3 before:mr-4 before:border-solid before:border-[--bg-login]
-                        before:dark:border-[--light-blue-opacity] before:border-t-0 before:border-r-2
+                        before:dark:border-white before:border-t-0 before:border-r-2
                         before:border-b-2 before:border-l-0 before:p-1 before:rotate-45 
                         `}
                         >
@@ -77,7 +77,7 @@ export function ModalTrainingBar({ initialGlobalFiles, globalFiles, creditorFile
                             })}
 
                             <summary
-                                className={`flex w-full font-bold text-[--bg-login] dark:text-[--light-blue-opacity] hover:bg-[--hover-light-route] dark:hover:bg-[--hover-dark-route] pr-2 rounded-md cursor-pointer`}
+                                className={`flex w-full font-bold text-[--bg-login] dark:text-[--light-blue-opacity] hover:bg-[--hover-light-route] dark:hover:bg-zinc-700 pr-2 rounded-md cursor-pointer`}
                                 onClick={() => setFolderInitialGlobalFiles((state) => state == "open" ? "close" : "open")}
                             >
                                 <span
@@ -104,7 +104,7 @@ export function ModalTrainingBar({ initialGlobalFiles, globalFiles, creditorFile
                     <details
                         className={`relative before:duration-200 open:before:rotate-[225deg]
                                 before:absolute before:w-2 before:h-2 before:top-[10px] before:right-0 before:mt-3 before:mr-4 before:border-solid before:border-[--bg-login]
-                                before:dark:border-[--light-blue-opacity] before:border-t-0 before:border-r-2
+                                before:dark:border-white before:border-t-0 before:border-r-2
                                 before:border-b-2 before:border-l-0 before:p-1 before:rotate-45`}
                     >
                         {operatorFiles.map((item, i) => {
@@ -180,7 +180,7 @@ export function ModalTrainingBar({ initialGlobalFiles, globalFiles, creditorFile
                         })}
 
                         <summary
-                            className={`flex w-full font-bold text-[--bg-login] hover:bg-[--hover-light-route] dark:hover:bg-[--hover-dark-route] pr-2 rounded-md cursor-pointer dark:text-[--text-input-dark]`}
+                            className={`flex w-full font-bold text-[--bg-login] hover:bg-[--hover-light-route] dark:hover:bg-zinc-700 pr-2 rounded-md cursor-pointer dark:text-[--text-input-dark]`}
                             onClick={() => setFolder((state) => state == "open" ? "close" : "open")}
                         >
                             <span
@@ -198,7 +198,7 @@ export function ModalTrainingBar({ initialGlobalFiles, globalFiles, creditorFile
                 </div>
             ) : (
                 <div
-                    className={`border-solid border-[1px] border-blue-500 rounded-md flex gap-5 w-full py-4 p-2 items-center cursor-not-allowed bg-slate-200 dark:bg-slate-700 dark:border-slate-500"`}
+                    className={`border-solid border-[1px] border-blue-500 rounded-md flex gap-5 w-full py-4 p-2 items-center cursor-not-allowed bg-slate-200 dark:bg-zinc-800/50`}
                 >
                     <FontAwesomeIcon icon={faLock} className={`text-[--bg-login] ml-3 dark:text-white w-5 h-5`} aria-hidden="true" />
 
