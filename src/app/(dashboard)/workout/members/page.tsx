@@ -2,7 +2,6 @@ import { workoutAbleUsers } from "@/api/workout/members/workoutAbleUsers";
 import { workoutList } from "@/api/workout/members/workoutList";
 import { workoutQuitterUsers } from "@/api/workout/members/workoutQuitterUsers";
 import { Ancora } from "@/components/Ancora";
-import { Button } from "@/components/Button";
 import { PaperBlock } from "@/components/PaperBlock";
 import { TextPrincipal } from "@/components/TextPrincipal";
 import { WorkoutDialogAble } from "@/components/workout/members/WorkoutDialogAble";

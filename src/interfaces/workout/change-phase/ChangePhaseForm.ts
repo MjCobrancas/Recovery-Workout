@@ -1,3 +1,4 @@
+import { IGetUserName } from "@/interfaces/generics/IGetUserName";
 import { z } from "zod";
 
 interface IWorkoutUser {
@@ -13,26 +14,24 @@ interface IWorkoutPhase {
     Phase: string
 }
 
-interface IWorkoutBackOffice{
-    Id_User: string
-    Name: string
-    Last_Name: string
-    Permission_Level_Id: number
-}
-
 interface IChangePhase {
     user: IWorkoutUser
     phases: IWorkoutPhase[]
-    backOffice: IWorkoutBackOffice[]
     idWorkout: number
+    userName: IGetUserName
 }
 
 export const changePhaseFormSchema = z.object({
-    workoutPhases: z.enum(["1", "2", "3", "4", "5", "6"]),
-    responsable: z.string().refine((value) => {
-        return Number(value) > 0
-    }, {
-        message: "Inválido"
+    workoutPhases: z.string().refine((value) => {
+        if (String(Number(value)) == "NaN") {
+            return false
+        }
+
+        if (Number(value) < 0) {
+            return false
+        }
+
+        return true
     })
 })
 
