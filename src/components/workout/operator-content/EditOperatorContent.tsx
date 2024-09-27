@@ -143,7 +143,7 @@ export function EditOperatorContent({ operators, workoutGetAllPhases, setValueDi
     return (
         <form className="w-full mt-10 flex flex-col" onSubmit={handleSubmit(handleUpdateOperatorFiles)}>
             <table className="w-full">
-                <thead className="w-full bg-gray-200 dark:bg-slate-600">
+                <thead className="w-full bg-gray-200 dark:bg-zinc-900">
                     <tr>
                         <th className="pl-6 text-left w-2/4 font-semibold p-2 dark:text-white/80 rounded-tl-md">Título do arquivo</th>
                         <th className="pl-4 text-left font-semibold p-2 dark:text-white/80">Fase</th>
@@ -153,7 +153,7 @@ export function EditOperatorContent({ operators, workoutGetAllPhases, setValueDi
                 <tbody>
                     {fields.map((item, index) => {
                         return (
-                            <tr key={item.id} className="h-fit odd:bg-gray-100 even:bg-gray-200 dark:odd:bg-slate-500 dark:even:bg-slate-600">
+                            <tr key={item.id} className="h-fit odd:bg-gray-100 even:bg-gray-200 dark:odd:bg-zinc-700 dark:even:bg-zinc-800">
                                 <td className="h-fit p-2 text-center">
                                     <Input
                                         id={`operatorFiles.${index}.Title`}
