@@ -15,7 +15,7 @@ import { useRouter } from "next/navigation";
 import { ChangeEvent, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 
-export function ChangePhaseForm({ user, phases, backOffice, idWorkout }: IChangePhase) {
+export function ChangePhaseForm({ user, phases, idWorkout, userName }: IChangePhase) {
 
     const router = useRouter()
 
@@ -60,12 +60,12 @@ export function ChangePhaseForm({ user, phases, backOffice, idWorkout }: IChange
         const object = {
             id_workout: idWorkout,
             id_phase: Number(data.workoutPhases),
-            id_responsible: Number(data.responsable),
+            id_responsible: 0,
             is_finish_workout: userFinished,
             is_dimissal: userDimissal
         }
 
-        const wUpdateChangedPhase: 'Created' | false = await updateWorkoutChangedPhase<typeof object>(object)
+        const wUpdateChangedPhase: 'Created' | false = await updateWorkoutChangedPhase(object)
 
         setResult(wUpdateChangedPhase)
         setSaveForm(true)
@@ -129,7 +129,6 @@ export function ChangePhaseForm({ user, phases, backOffice, idWorkout }: IChange
                     <FieldForm
                         label="responsable"
                         name=" Reponsável:"
-                        error={errors.responsable && "Inválido"}
                         obrigatory={true}
                     >
                         <SelectField
@@ -137,21 +136,13 @@ export function ChangePhaseForm({ user, phases, backOffice, idWorkout }: IChange
                             id="responsable"
                             styles={`h-10 w-fit`}
                             required
-                            onForm={true}
-                            value={watch("responsable")}
-                            register={register}
+                            onForm={false}
+                            disabled={true}
                         >
-                            <Option value={0} firstValue={"Selecione"} />
-
-                            {backOffice.map((item) => {
-                                return (
-                                    <Option
-                                        key={item.Id_User}
-                                        value={item.Id_User}
-                                        firstValue={`${item.Name} ${item.Last_Name}`}
-                                    />
-                                )
-                            })}
+                            <Option
+                                value={userName.Id_User}
+                                firstValue={`${userName.Name} ${userName.Last_Name}`}
+                            />
                         </SelectField>
                     </FieldForm>
                 </div>
@@ -160,7 +151,7 @@ export function ChangePhaseForm({ user, phases, backOffice, idWorkout }: IChange
             <div className={`flex justify-center items-center gap-5 mt-10`}>
                 {newUserPhase == 6 && (
                     <div className={`flex gap-2`}>
-                        <p className={`font-medium`}>Operator apto para operação</p>
+                        <p className={`font-medium`}>Operador apto para operação</p>
                         <button
                             type="button"
                             onClick={() => changeStatusOfFinishedUser(!userFinished)}
@@ -175,7 +166,6 @@ export function ChangePhaseForm({ user, phases, backOffice, idWorkout }: IChange
                         </button>
                     </div>
                 )}
-
 
                 <div className={`flex gap-2`}>
                     <p className={`font-medium`}>Operador foi desligado da empresa</p>
